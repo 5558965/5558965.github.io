@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($isSuccess) {
-        $headers = "From: $firstname $name <$email>\r\n";
+        $headers = "From: $firstname $name $email>\r\n";
         $headers .= "Reply-To: $email\r\n";
         $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
         
