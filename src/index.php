@@ -1443,6 +1443,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         <div class="timeline">
             <!-- Item 1 - Google -->
+
+
+
+
+
+            
             <div class="timeline-item animate__animated" data-animation="fadeInLeft">
                 <div class="timeline-badge bg-white text-success">
                     <i class="fas fa-briefcase"></i>
@@ -1452,8 +1458,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="d-flex align-items-center mb-2">
                             <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="company-logo me-3" width="80">
                             <div>
-                                <h3 class="fw-bold text-white mb-0">Google</h3>
-                                <h4 class="text-success mb-0">Développeur Web Sénior</h4>
+                <br> <!-- Double espace -->  
+                                <h4 class="text-success mb-0">Développeur Web Sénior</h4> 
                             </div>
                         </div>
                         <p class="text-light mb-3">
@@ -1521,7 +1527,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
             </div>
-            
             <!-- Item 3 - Twitter -->
             <div class="timeline-item animate__animated" data-animation="fadeInLeft">
                 <div class="timeline-badge bg-white text-success">
@@ -1633,7 +1638,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             
-            <!-- Item 6 - TikTok -->
+            <!-- Item 6 - Odoo -->
             <div class="timeline-item animate__animated" data-animation="fadeInRight">
                 <div class="timeline-badge bg-white text-success">
                     <i class="fas fa-briefcase"></i>
@@ -1641,14 +1646,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="timeline-panel bg-white bg-opacity-10 backdrop-blur rounded-4 p-4 shadow-sm">
                     <div class="timeline-heading">
                         <div class="d-flex align-items-center mb-2">
-                            <img src="images/titok_video .png.jpeg" alt="TikTok" class="company-logo me-3" width="30">
+                            <img src="images/odoo.png.png" alt="Odoo" class="company-logo me-3" width="30">
                             <div>
-                                <h3 class="fw-bold text-white mb-0">TikTok</h3>
+                                <h3 class="fw-bold text-white mb-0">Odoo</h3>
                                 <h4 class="text-success mb-0">Développeur Web Junior</h4>
                             </div>
                         </div>
                         <p class="text-light mb-3">
-                            <i class="far fa-calendar-alt me-2"></i>2024 - 2025
+                            <i class="far fa-calendar-alt me-2"></i> 2025
                         </p>
                     </div>
                     <div class="timeline-body">
@@ -1657,13 +1662,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
                                     <i class="fas fa-check text-white"></i>
                                 </div>
-                                <span class="text-light">🚀 Création & Développement du Repost TikTok pour notre appli web 🎥✨</span>
+                                <span class="text-light">🚀 Création & Développement du Repost Odoo pour notre appli web 🎥✨</span>
                             </li>
                             <li class="d-flex">
                                 <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
                                     <i class="fas fa-check text-white"></i>
                                 </div>
-                                <span class="text-light">🚀 Intégration des vidéos sur les applis web mobile 🎥✨</span>
+                                <span class="text-light">🚀Configuration et analyse des modules  🎥✨</span>
+                            </li>
+                            <li class="d-flex">  
+                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                    <i class="fas fa-check text-white"></i>
+                                </div>
+                                <span class="text-light">🚀Assistance des clients🎥✨</span>
                             </li>
                         </ul>
                     </div>
@@ -1962,11 +1973,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <ul class="list-unstyled text-start ps-3 text-light">
                             <li class="mb-2 d-flex align-items-center">
                                 <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>Python & R</span>
+                                <span>Python</span>
                             </li>
                             <li class="mb-2 d-flex align-items-center">
                                 <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>Java & Scala</span>
+                                <span>R</span>
                             </li>
                             <li class="mb-2 d-flex align-items-center">
                                 <i class="fas fa-check-circle text-primary me-2"></i>
@@ -1974,7 +1985,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </li>
                             <li class="mb-2 d-flex align-items-center">
                                 <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>JavaScript</span>
+                                <span>Scala</span>
                             </li>
                         </ul>
                         <div class="hover-content position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-primary bg-opacity-90 opacity-0 transition-all">
@@ -4194,104 +4205,107 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
         </div>
 
-        <!-- Informations de contact -->
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="row g-4">
-                    <!-- Email -->
-                    <div class="col-md-4">
-                        <div class="contact-card bg-white p-4 h-100 rounded-4 shadow-lg animate__animated" data-animation="fadeInUp">
-                            <div class="text-center">
-                                <div class="icon-wrapper bg-primary-light rounded-circle p-3 mb-3 mx-auto">
-                                    <i class="fas fa-envelope fa-2x text-primary"></i>
-                                </div>
-                                <h3 class="h5 mb-3">Email</h3>
-                                <p class="mb-1">Pour toute question ou demande</p>
-                                <a href="abdoulrazakkouame@gmail.com" class="d-block text-primary fw-bold">abdoulrazakkouame@gmail.com</a>
-                               
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Téléphone -->
-                    <div class="col-md-4">
-                        <div class="contact-card bg-white p-4 h-100 rounded-4 shadow-lg animate__animated" data-animation="fadeInUp" data-delay="0.2s">
-                            <div class="text-center">
-                                <div class="icon-wrapper bg-primary-light rounded-circle p-3 mb-3 mx-auto">
-                                    <i class="fas fa-phone-alt fa-2x text-primary"></i>
-                                </div>
-                                <h3 class="h5 mb-3">Téléphone</h3>
-                                <p class="mb-1">Du lundi au vendredi</p>
-                                <p class="mb-1">9h00 - 18h00</p>
-                                <a href="tel:+33123456789" class="d-block text-primary fw-bold">+225 07 48 20 88 65</a>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Localisation -->
-                    <div class="col-md-4">
-                        <div class="contact-card bg-white p-4 h-100 rounded-4 shadow-lg animate__animated" data-animation="fadeInUp" data-delay="0.4s">
-                            <div class="text-center">
-                                <div class="icon-wrapper bg-primary-light rounded-circle p-3 mb-3 mx-auto">
-                                    <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
-                                </div>
-                                <h3 class="h5 mb-3">Localisation</h3>
-                                <p class="mb-1">Rue 170,Cocody Riviera-Bonoumin</p>
-                                <p class="mb-1">Abidjan,côte d'Ivoire</p>
-                                <a href="#" class="btn btn-sm btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#mapModal">
-                                    Voir sur la carte
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Formulaire de contact -->
-        <div class="row mt-5 animate__animated" data-animation="fadeIn">
-            <div class="col-lg-8 mx-auto">
-                <div class="card shadow-lg border-0 rounded-4">
-                    <div class="card-body p-5">
-                        <h3 class="text-center mb-4">Envoyez-nous un message</h3>
-                        <form>
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="name" placeholder="Votre nom">
-                                        <label for="name">Votre nom</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input type="email" class="form-control" id="email" placeholder="Votre email">
-                                        <label for="email">Votre email</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="subject" placeholder="Sujet">
-                                        <label for="subject">Sujet</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Votre message" id="message" style="height: 150px"></textarea>
-                                        <label for="message">Votre message</label>
-                                    </div>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <button type="submit" class="btn btn-primary btn-lg px-4">
-                                        <i class="fas fa-paper-plane me-2"></i> Envoyer le message
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+<!-- Informations de contact -->
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+        <div class="row g-4">
+            <!-- Email -->
+            <div class="col-md-4">
+                <div class="contact-card bg-white p-4 h-100 rounded-4 shadow-lg animate__animated" data-animation="fadeInUp">
+                    <div class="text-center">
+                        <div class="icon-wrapper bg-primary-light rounded-circle p-3 mb-3 mx-auto">
+                            <i class="fas fa-envelope fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="h5 mb-3">Email</h3>
+                        <p class="mb-3">Pour toute question ou demande</p>
+                        <a href="mailto:abdoulrazakkouame@gmail.com" class="btn btn-primary px-4 py-2 fw-bold">
+                            <i class="fas fa-paper-plane me-2"></i> Nous écrire
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Téléphone -->
+            <div class="col-md-4">
+                <div class="contact-card bg-white p-4 h-100 rounded-4 shadow-lg animate__animated" data-animation="fadeInUp" data-delay="0.2s">
+                    <div class="text-center">
+                        <div class="icon-wrapper bg-primary-light rounded-circle p-3 mb-3 mx-auto">
+                            <i class="fas fa-phone-alt fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="h5 mb-3">Téléphone</h3>
+                        <p class="mb-2">Du lundi au vendredi</p>
+                        <p class="mb-3">9h00 - 18h00</p>
+                        <a href="tel:+2250748208865" class="btn btn-outline-primary px-4 py-2 fw-bold">
+                            <i class="fas fa-phone-alt me-2"></i> +225 07 48 20 88 65
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Localisation -->
+            <div class="col-md-4">
+                <div class="contact-card bg-white p-4 h-100 rounded-4 shadow-lg animate__animated" data-animation="fadeInUp" data-delay="0.4s">
+                    <div class="text-center">
+                        <div class="icon-wrapper bg-primary-light rounded-circle p-3 mb-3 mx-auto">
+                            <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
+                        </div>
+                        <h3 class="h5 mb-3">Localisation</h3>
+                        <p class="mb-2">Rue 170, Cocody Riviera-Bonoumin</p>
+                        <p class="mb-3">Abidjan, Côte d'Ivoire</p>
+                        <a href="#" class="btn btn-primary px-4 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#mapModal">
+                            <i class="fas fa-map-marked-alt me-2"></i> Voir la carte
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Formulaire de contact -->
+<div class="row mt-5 animate__animated" data-animation="fadeIn">
+    <div class="col-lg-8 mx-auto">
+        <div class="card shadow-lg border-0 rounded-4">
+            <div class="card-body p-5">
+                <h3 class="text-center mb-4">Envoyez-nous un message</h3>
+                <form>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="name" placeholder="Votre nom" required>
+                                <label for="name">Votre nom</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="email" placeholder="Votre email" required>
+                                <label for="email">Votre email</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="subject" placeholder="Sujet" required>
+                                <label for="subject">Sujet</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Votre message" id="message" style="height: 150px" required></textarea>
+                                <label for="message">Votre message</label>
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary btn-lg px-4 py-3">
+                                <i class="fas fa-paper-plane me-2"></i> Envoyer le message
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
         <!-- Réseaux sociaux -->
         <div class="row mt-5 animate__animated" data-animation="fadeIn">
@@ -4312,6 +4326,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     </a>
                     <a href="#" class="social-icon bg-youtube rounded-circle">
                         <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-whatsapp rounded-circle">
+                        <i class="fab fa-whatsapp"></i>
+                        <a href="#" class="social-icon bg-tiktok rounded-circle">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
                     </a>
                 </div>
             </div>
@@ -4335,7 +4355,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <a href="https://maps.google.com?q=123+Rue+de+l'Exemple,75001+Paris,France" target="_blank" class="btn btn-primary">
+                <a href="https://www.google.com/maps/place/Riviera+Bonoumin+cit%C3%A9+lauriers+6/@5.3716683,-3.9739904,17z/data=!4m6!3m5!1s0xfc1ed4a1e8c1e39:0x3920e056d529fa9b!8m2!3d5.3717997!4d-3.9716072!16s%2Fg%2F11jyzl5ck8?entry=ttu&g_ep=EgoyMDI1MDgxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="btn btn-primary">
                     <i class="fas fa-directions me-2"></i> Itinéraire
                 </a>
             </div>
@@ -4596,12 +4616,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             <a href="#" class="social-icon rounded-circle d-flex align-items-center justify-content-center" 
                                data-tooltip="Twitter">
                                 <i class="fab fa-twitter"></i>
-                            </a>
-                        </li>
-                        <li class="list-inline-item mx-2">
-                            <a href="#" class="social-icon rounded-circle d-flex align-items-center justify-content-center" 
-                               data-tooltip="Email">
-                                <i class="fas fa-envelope"></i>
                             </a>
                         </li>
                     </ul>
