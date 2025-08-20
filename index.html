@@ -1,73 +1,3 @@
- 
-// Something is wronguration améliorée du formulaire
-$firstname = $name = $email = $phone = $message = "";
-$errors = [];
-$isSuccess = false;
-$emailTo = "abdoulrazakkouame@gmail.com";
-
-// Fonctions de validation améliorées
-function isPhone($var) {
-    return preg_match("/^[0-9 \+\-\(\)]{10,20}$/", $var);
-}
-
-function isEmail($var) {
-    return filter_var($var, FILTER_VALIDATE_EMAIL);
-}
-
-function verifyInput($var) {
-    $var = trim($var);
-    $var = stripslashes($var);
-    $var = htmlspecialchars($var, ENT_QUOTES, 'UTF-8');
-    return $var;
-}
-
-// Traitement du formulaire
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $fields = [
-        'firstname' => ['error' => "Je veux connaitre ton prénom !", 'd' => true],
-        'name' => ['error' => "Et oui je veux tout savoir. Même ton nom !", 'd' => true],
-        'email' => ['error' => "T'essaies de me rouler ? C'est pas un email ça !", 'validate' => 'isEmail'],
-        'phone' => ['error' => "Que des chiffres et des espaces, stp...", 'validate' => 'isPhone'],
-        'message' => ['error' => "Qu'est-ce que tu veux me dire ?", 'd' => true]
-    ];
-
-    $isSuccess = true;
-    $emailText = "";
-
-    foreach ($fields as $field => $options) {
-        $$field = verifyInput($_POST[$field] ?? '');
-        
-        if (!empty($options['d']) && empty($$field)) {
-            $errors[$field] = $options['error'];
-            $isSuccess = false;
-        } elseif (!empty($options['validate'])) {
-            $validator = $options['validate'];
-            if (!empty($$field) && !$validator($$field)) {
-                $errors[$field] = $options['error'];
-                $isSuccess = false;
-            }
-        }
-        
-        if ($isSuccess && !empty($$field)) {
-            $emailText .= ucfirst($field).": ".$$field."\n";
-        }
-    }
-
-    if ($isSuccess) {
-        $headers = "From: $firstname $name $email>\r\n";
-        $headers .= "Reply-To: $email\r\n";
-        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-        
-        if (mail($emailTo, "Message de votre site", $emailText, $headers)) {
-            // Réinitialisation après succès
-            $firstname = $name = $email = $phone = $message = "";
-        } else {
-            $errors['global'] = "Une erreur s'est produite lors de l'envoi du message.";
-            $isSuccess = false;
-        }
-    }
-}
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -87,7 +17,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
+     <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
         :root {
             --primary-color: #007bff;
@@ -778,7 +717,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <script>
     // Animation au scroll
     document.addEventListener('DOMContentLoaded', function() {
-        const navbar = document.Something is wrongSelector('.navbar');
+        const navbar = document.querySelector('.navbar');
         
         window.addEventListener('scroll', function() {
             if (window.scrollY > 50) {
@@ -789,8 +728,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
         
         // Fermer le menu mobile après clic
-        const navLinks = document.Something is wrongSelectorAll('.nav-link');
-        const navbarCollapse = document.Something is wrongSelector('.navbar-collapse');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const navbarCollapse = document.querySelector('.navbar-collapse');
         
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -826,7 +765,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="row align-items-center">
             <div class="col-lg-6 order-lg-2 text-center text-lg-start mb-5 mb-lg-0">
                 <h1 class="display-3 fw-bold mb-3 animate__animated animate__fadeIn text-white">
-                    <span class="typed-text"></span><span class="cursor"> </span>
+                    <span class="typed-text"></span><span class="cursor">&nbsp;</span>
                 </h1>
                 <h2 class="h3 mb-4 animate__animated animate__fadeIn animate__delay-1s text-white opacity-75">
                     Développeur Web Full Stack & Expert en Solutions Digitales
@@ -1004,7 +943,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         position: absolute;
         bottom: 30px;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-50);
         animation: bounce 2s infinite;
     }
     
@@ -1043,7 +982,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         let currentText = '';
         let letter = '';
         const typingSpeed = 100;
-        const elem = document.Something is wrongSelector('.typed-text');
+        const elem = document.querySelector('.typed-text');
         
         function type() {
             if(count === texts.length) {
@@ -1190,12 +1129,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             
             <div class="col-lg-6">
-                <!-- React & jSomething is wrong -->
+                <!-- React & jQuery -->
                 <div class="skill-item mb-4 animate__animated" data-animation="fadeInRight">
                     <div class="d-flex justify-content-between mb-2">
                         <h5 class="mb-0 text-white">
                             <i class="fab fa-react text-info me-2"></i>
-                            React & jSomething is wrong
+                            React & jQuery
                         </h5>
                         <span class="text-white fw-bold skill-percent" data-target="88">0%</span>
                     </div>
@@ -1346,11 +1285,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     document.addEventListener('DOMContentLoaded', function() {
         // Animation des compétences
         const animateSkills = () => {
-            const skillItems = document.Something is wrongSelectorAll('.skill-item');
+            const skillItems = document.querySelectorAll('.skill-item');
             
             skillItems.forEach(item => {
-                const percentElement = item.Something is wrongSelector('.skill-percent');
-                const progressBar = item.Something is wrongSelector('.progress-bar');
+                const percentElement = item.querySelector('.skill-percent');
+                const progressBar = item.querySelector('.progress-bar');
                 const target = parseInt(percentElement.getAttribute('data-target'));
                 
                 let current = 0;
@@ -1415,1300 +1354,2033 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </script>
     </section>
 
-   
-    
-<!-- Section Expérience avec fond vert animé -->
-<section id="experience" class="position-relative py-5 overflow-hidden">
-    <!-- Vagues animées en bas -->
-    <div class="wave-animation position-absolute bottom-0 start-0 w-100">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" 
-                  opacity=".25" class="shape-fill"></path>
-            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" 
-                  opacity=".5" class="shape-fill"></path>
-            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" 
-                  class="shape-fill"></path>
-        </svg>
-    </div>
-
-    <!-- Particules animées -->
-    <div class="particles-js position-absolute top-0 start-0 w-100 h-100"></div>
-
-    <div class="container position-relative z-1">
-        <div class="section-header text-center mb-5 animate__animated" data-animation="fadeInDown">
-            <div class="divider bg-white mx-auto mb-3"></div>
-            <h2 class="display-5 fw-bold text-white">Expérience Professionnelle</h2>
-            <p class="lead text-light">Mon parcours en entreprise</p>
-        </div>
-        
-        <div class="timeline">
-            <!-- Item 1 - Google -->
-            <div class="timeline-item animate__animated" data-animation="fadeInLeft">
-                <div class="timeline-badge bg-white text-success">
-                    <i class="fas fa-briefcase"></i>
-                </div>
-                <div class="timeline-panel bg-white bg-opacity-10 backdrop-blur rounded-4 p-4 shadow-sm">
-                    <div class="timeline-heading">
-                        <div class="d-flex align-items-center mb-2">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" class="company-logo me-3" width="80">
-                            <div>
-                                <h3 class="fw-bold text-white mb-0">Google</h3>
-                                <h4 class="text-success mb-0">Développeur Web Sénior</h4>
-                            </div>
-                        </div>
-                        <p class="text-light mb-3">
-                            <i class="far fa-calendar-alt me-2"></i>2020 - 2021
-                        </p>
-                    </div>
-                    <div class="timeline-body">
-                        <ul class="list-unstyled">
-                            <li class="mb-3 d-flex">
-                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
-                                    <i class="fas fa-check text-white"></i>
-                                </div>
-                                <span class="text-light">🚀 Ajout de la possibilité d'écouter une traduction dans Google Translate📲✨</span>
-                            </li>
-                            <li class="mb-3 d-flex">
-                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
-                                    <i class="fas fa-check text-white"></i>
-                                </div>
-                                <span class="text-light">🚀 Développement de Google Suggest en mode Offline 📲✨</span>
-                            </li>
-                            <li class="d-flex">
-                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
-                                    <i class="fas fa-check text-white"></i>
-                                </div>
-                                <span class="text-light">🚀 Nouveau design du player de YouTube adapté au mobile 📲✨</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 2 - Facebook -->
-            <div class="timeline-item animate__animated" data-animation="fadeInRight">
-                <div class="timeline-badge bg-white text-success">
-                    <i class="fas fa-briefcase"></i>
-                </div>
-                <div class="timeline-panel bg-white bg-opacity-10 backdrop-blur rounded-4 p-4 shadow-sm">
-                    <div class="timeline-heading">
-                        <div class="d-flex align-items-center mb-2">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" class="company-logo me-3" width="30">
-                            <div>
-                                <h3 class="fw-bold text-white mb-0">Facebook</h3>
-                                <h4 class="text-success mb-0">Développeur Web</h4>
-                            </div>
-                        </div>
-                        <p class="text-light mb-3">
-                            <i class="far fa-calendar-alt me-2"></i>2021 - 2022
-                        </p>
-                    </div>
-                    <div class="timeline-body">
-                        <ul class="list-unstyled">
-                            <li class="mb-3 d-flex">
-                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
-                                    <i class="fas fa-check text-white"></i>
-                                </div>
-                                <span class="text-light">🚀 Développement du bouton Share pour les applis Web mobile 📲✨</span>
-                            </li>
-                            <li class="d-flex">
-                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
-                                    <i class="fas fa-check text-white"></i>
-                                </div>
-                                <span class="text-light">🚀 Lancement automatique des vidéos en mode mute depuis la Timeline 📲✨</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 3 - Twitter -->
-            <div class="timeline-item animate__animated" data-animation="fadeInLeft">
-                <div class="timeline-badge bg-white text-success">
-                    <i class="fas fa-briefcase"></i>
-                </div>
-                <div class="timeline-panel bg-white bg-opacity-10 backdrop-blur rounded-4 p-4 shadow-sm">
-                    <div class="timeline-heading">
-                        <div class="d-flex align-items-center mb-2">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Logo_of_Twitter.svg" alt="Twitter" class="company-logo me-3" width="30">
-                            <div>
-                                <h3 class="fw-bold text-white mb-0">Twitter</h3>
-                                <h4 class="text-success mb-0">Développeur Web Junior</h4>
-                            </div>
-                        </div>
-                        <p class="text-light mb-3">
-                            <i class="far fa-calendar-alt me-2"></i>2022 - 2023
-                        </p>
-                    </div>
-                    <div class="timeline-body">
-                        <ul class="list-unstyled">
-                            <li class="mb-3 d-flex">
-                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
-                                    <i class="fas fa-check text-white"></i>
-                                </div>
-                                <span class="text-light">🚀 Création et Développement du Retweet pour l'appli Web 📲✨</span>
-                            </li>
-                            <li class="d-flex">
-                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
-                                    <i class="fas fa-check text-white"></i>
-                                </div>
-                                <span class="text-light">🚀 Intégration des vidéos sur les applis web mobile 📲✨</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 4 - Instagram -->
-            <div class="timeline-item animate__animated" data-animation="fadeInRight">
-                <div class="timeline-badge bg-white text-success">
-                    <i class="fas fa-briefcase"></i>
-                </div>
-                <div class="timeline-panel bg-white bg-opacity-10 backdrop-blur rounded-4 p-4 shadow-sm">
-                    <div class="timeline-heading">
-                        <div class="d-flex align-items-center mb-2">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" class="company-logo me-3" width="30">
-                            <div>
-                                <h3 class="fw-bold text-white mb-0">Instagram</h3>
-                                <h4 class="text-success mb-0">Développeur Web Junior</h4>
-                            </div>
-                        </div>
-                        <p class="text-light mb-3">
-                            <i class="far fa-calendar-alt me-2"></i>2023 - 2024
-                        </p>
-                    </div>
-                    <div class="timeline-body">
-                        <ul class="list-unstyled">
-                            <li class="mb-3 d-flex">
-                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
-                                    <i class="fas fa-check text-white"></i>
-                                </div>
-                                <span class="text-light">🚀 Création & Développement du module Repost pour notre appli web 💻✨</span>
-                            </li>
-                            <li class="d-flex">
-                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
-                                    <i class="fas fa-check text-white"></i>
-                                </div>
-                                <span class="text-light">🚀 Intégration des vidéos sur les applis web mobile 💻✨</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 5 - WhatsApp -->
-            <div class="timeline-item animate__animated" data-animation="fadeInLeft">
-                <div class="timeline-badge bg-white text-success">
-                    <i class="fas fa-briefcase"></i>
-                </div>
-                <div class="timeline-panel bg-white bg-opacity-10 backdrop-blur rounded-4 p-4 shadow-sm">
-                    <div class="timeline-heading">
-                        <div class="d-flex align-items-center mb-2">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" class="company-logo me-3" width="30">
-                            <div>
-                                <h3 class="fw-bold text-white mb-0">WhatsApp</h3>
-                                <h4 class="text-success mb-0">Développeur Web Junior</h4>
-                            </div>
-                        </div>
-                        <p class="text-light mb-3">
-                            <i class="far fa-calendar-alt me-2"></i>2024 - 2025
-                        </p>
-                    </div>
-                    <div class="timeline-body">
-                        <ul class="list-unstyled">
-                            <li class="mb-3 d-flex">
-                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
-                                    <i class="fas fa-check text-white"></i>
-                                </div>
-                                <span class="text-light">💬 Création & Développement de la fonction Transfert rapide pour notre appli web 📲✨</span>
-                            </li>
-                            <li class="d-flex">
-                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
-                                    <i class="fas fa-check text-white"></i>
-                                </div>
-                                <span class="text-light">💬 Intégration des vidéos sur les applis web mobile 📲✨</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 6 - TikTok -->
-            <div class="timeline-item animate__animated" data-animation="fadeInRight">
-                <div class="timeline-badge bg-white text-success">
-                    <i class="fas fa-briefcase"></i>
-                </div>
-                <div class="timeline-panel bg-white bg-opacity-10 backdrop-blur rounded-4 p-4 shadow-sm">
-                    <div class="timeline-heading">
-                        <div class="d-flex align-items-center mb-2">
-                            <img src="images/titok_video .png.jpeg" alt="TikTok" class="company-logo me-3" width="30">
-                            <div>
-                                <h3 class="fw-bold text-white mb-0">TikTok</h3>
-                                <h4 class="text-success mb-0">Développeur Web Junior</h4>
-                            </div>
-                        </div>
-                        <p class="text-light mb-3">
-                            <i class="far fa-calendar-alt me-2"></i>2024 - 2025
-                        </p>
-                    </div>
-                    <div class="timeline-body">
-                        <ul class="list-unstyled">
-                            <li class="mb-3 d-flex">
-                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
-                                    <i class="fas fa-check text-white"></i>
-                                </div>
-                                <span class="text-light">🚀 Création & Développement du Repost TikTok pour notre appli web 🎥✨</span>
-                            </li>
-                            <li class="d-flex">
-                                <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
-                                    <i class="fas fa-check text-white"></i>
-                                </div>
-                                <span class="text-light">🚀 Intégration des vidéos sur les applis web mobile 🎥✨</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <style>
-    /* Thème vert professionnel */
-    #experience {
-        background: linear-gradient(135deg, #1a5e1a 0%, #0d3312 100%);
-    }
-    
-    .shape-fill {
-        fill: rgba(255, 255, 255, 0.15);
-    }
-    
-    /* Timeline stylisée */
-    .timeline {
-        position: relative;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 40px 0;
-    }
-    
-    .timeline::after {
-        content: '';
-        position: absolute;
-        width: 4px;
-        background: rgba(255, 255, 255, 0.3);
-        top: 0;
-        bottom: 0;
-        left: 50%;
-        margin-left: -2px;
-        border-radius: 10px;
-    }
-    
-    .timeline-item {
-        padding: 10px 40px;
-        position: relative;
-        width: 50%;
-        box-sizing: border-box;
-    }
-    
-    .timeline-item:nth-child(odd) {
-        left: 0;
-    }
-    
-    .timeline-item:nth-child(even) {
-        left: 50%;
-    }
-    
-    .timeline-badge {
-        position: absolute;
-        width: 50px;
-        height: 50px;
-        line-height: 50px;
-        text-align: center;
-        border-radius: 50%;
-        background: white;
-        color: #28a745;
-        z-index: 1;
-        top: 15px;
-        right: -25px;
-        font-size: 1.2rem;
-        box-shadow: 0 0 0 4px rgba(255,255,255,0.2);
-    }
-    
-    .timeline-item:nth-child(even) .timeline-badge {
-        left: -25px;
-    }
-    
-    .timeline-panel {
-        position: relative;
-        background: rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-        border-radius: 10px;
-        padding: 20px;
-        transition: all 0.3s ease;
-    }
-    
-    .timeline-panel:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
-    
-    .company-logo {
-        filter: brightness(0) invert(1);
-        transition: all 0.3s ease;
-    }
-    
-    .timeline-panel:hover .company-logo {
-        filter: none;
-    }
-    
-    .timeline-icon {
-        width: 25px;
-        height: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .backdrop-blur {
-        backdrop-filter: blur(10px);
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-        .timeline::after {
-            left: 31px;
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --gradient: linear-gradient(135deg, #0a504a 0%, #38ef7d 100%);
         }
-        
-        .timeline-item {
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        /* Section Expérience améliorée */
+        #experience {
+            background: linear-gradient(135deg, #0a504a 0%, #38ef7d 100%);
+            position: relative;
+            padding: 100px 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Vagues animées améliorées */
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
             width: 100%;
-            padding-left: 70px;
-            padding-right: 25px;
+            height: 200px;
+            overflow: hidden;
+            z-index: 1;
         }
-        
-        .timeline-item:nth-child(even) {
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background-repeat: repeat-x;
+            background-position: 0 bottom;
+            transform-origin: center bottom;
+        }
+
+        .wave1 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%23ffffff'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%23ffffff'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%23ffffff'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 25s linear infinite;
+        }
+
+        .wave2 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%23ffffff'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%23ffffff'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%23ffffff'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 20s linear infinite;
+            animation-delay: -5s;
+            opacity: 0.7;
+        }
+
+        .wave3 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%23ffffff'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%23ffffff'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%23ffffff'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 15s linear infinite;
+            animation-delay: -2s;
+            opacity: 0.4;
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(-25%);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Particules animées améliorées */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: floatParticle 15s infinite ease-in-out;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(-20px) translateX(10px) rotate(36deg) scale(1);
+            }
+            30% {
+                transform: translateY(-60px) translateX(30px) rotate(108deg) scale(1.2);
+            }
+            50% {
+                transform: translateY(-100px) translateX(50px) rotate(180deg) scale(1);
+            }
+            70% {
+                transform: translateY(-140px) translateX(70px) rotate(252deg) scale(0.8);
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-200px) translateX(100px) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Timeline améliorée */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 10px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(odd) {
             left: 0;
         }
-        
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
         .timeline-badge {
-            left: 6px !important;
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border-radius: 50%;
+            background: white;
+            color: var(--success-color);
+            z-index: 2;
+            top: 20px;
+            right: -30px;
+            font-size: 1.5rem;
+            box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
         }
-        
-        .wave-animation {
-            height: 80px;
+
+        .timeline-item:nth-child(even) .timeline-badge {
+            left: -30px;
         }
-    }
-</style>
 
-<script>
-    // Animation au scroll
-    document.addEventListener('DOMContentLoaded', function() {
-        // Animation des éléments de la timeline
-        const animateTimeline = () => {
-            const timelineItems = document.Something is wrongSelectorAll('.timeline-item');
-            
-            timelineItems.forEach((item, index) => {
-                setTimeout(() => {
-                    item.style.opacity = '1';
-                    item.style.transform = 'translateY(0)';
-                }, index * 200);
-            });
-        };
-        
-        // Observer pour déclencher l'animation
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateTimeline();
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        observer.observe(document.getElementById('experience'));
-    });
-</script>
-
-
-    </section>
-<!-- Section Formation avec animations -->
-<section id="education" class="position-relative py-5 overflow-hidden">
-    <!-- Vagues animées en bas -->
-    <div class="wave-animation position-absolute bottom-0 start-0 w-100 rotate-180">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" 
-                  opacity=".25" class="shape-fill"></path>
-            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" 
-                  opacity=".5" class="shape-fill"></path>
-            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" 
-                  class="shape-fill"></path>
-        </svg>
-    </div>
-
-    <!-- Particules animées -->
-    <div class="particles-js position-absolute top-0 start-0 w-100 h-100"></div>
-
-    <!-- Éléments décoratifs -->
-    <div class="position-absolute top-0 start-0 w-100 h-100 z-0">
-        <div class="education-shape shape-1"></div>
-        <div class="education-shape shape-2"></div>
-        <div class="education-shape shape-3"></div>
-    </div>
-
-    <div class="container position-relative z-1">
-        <div class="section-header text-center mb-5 animate__animated" data-animation="fadeInDown">
-            <div class="divider bg-primary mx-auto mb-3"></div>
-            <h2 class="display-5 fw-bold text-white">Formation</h2>
-            <p class="lead text-light">Mon parcours académique</p>
-        </div>
-        
-        <div class="row g-4">
-            <!-- Carte 1 -->
-            <div class="col-md-4 animate__animated" data-animation="fadeInUp">
-                <div class="card h-100 border-0 shadow-lg hover-effect-3d">
-                    <div class="card-body text-center p-4 position-relative">
-                        <div class="education-icon mb-3">
-                            <div class="icon-bg bg-primary-light rounded-circle p-3 mx-auto">
-                                <i class="fas fa-graduation-cap fa-2x text-primary"></i>
-                            </div>
-                        </div>
-                        <div class="year-badge bg-primary text-white rounded-pill px-3 py-1 d-inline-block mb-3">
-                            2020 - 2021
-                        </div>
-                        <h3 class="h4 fw-bold mt-2 text-white">Institut Sainte Marie</h3>
-                        <h4 class="h5 text-primary mb-3">BTS Informatique</h4>
-                        <div class="divider-sm bg-primary mx-auto my-3"></div>
-                        <ul class="list-unstyled text-start ps-3 text-light">
-                            <li class="mb-2 d-flex align-items-center">
-                                <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>Réseaux Informatiques</span>
-                            </li>
-                            <li class="mb-2 d-flex align-items-center">
-                                <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>Télécommunications</span>
-                            </li>
-                            <li class="mb-2 d-flex align-items-center">
-                                <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>Systèmes d'information</span>
-                            </li>
-                        </ul>
-                        <div class="hover-content position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-primary bg-opacity-90 opacity-0 transition-all">
-                            <div class="p-4 text-white">
-                                <h5 class="fw-bold">Compétences acquises</h5>
-                                <p class="small">Formation complète en infrastructure réseau et systèmes d'information</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Carte 2 -->
-            <div class="col-md-4 animate__animated" data-animation="fadeInUp" data-delay="0.2s">
-                <div class="card h-100 border-0 shadow-lg hover-effect-3d">
-                    <div class="card-body text-center p-4 position-relative">
-                        <div class="education-icon mb-3">
-                            <div class="icon-bg bg-primary-light rounded-circle p-3 mx-auto">
-                                <i class="fas fa-laptop-code fa-2x text-primary"></i>
-                            </div>
-                        </div>
-                        <div class="year-badge bg-primary text-white rounded-pill px-3 py-1 d-inline-block mb-3">
-                            2024
-                        </div>
-                        <h3 class="h4 fw-bold mt-2 text-white">Happy Coders Academy</h3>
-                        <h4 class="h5 text-primary mb-3">Développeur Web</h4>
-                        <div class="divider-sm bg-primary mx-auto my-3"></div>
-                        <ul class="list-unstyled text-start ps-3 text-light">
-                            <li class="mb-2 d-flex align-items-center">
-                                <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>HTML/CSS & JavaScript</span>
-                            </li>
-                            <li class="mb-2 d-flex align-items-center">
-                                <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>jSomething is wrong & Bootstrap</span>
-                            </li>
-                            <li class="mb-2 d-flex align-items-center">
-                                <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>PHP & MySQL</span>
-                            </li>
-                            <li class="mb-2 d-flex align-items-center">
-                                <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>Responsive Design</span>
-                            </li>
-                        </ul>
-                        <div class="hover-content position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-primary bg-opacity-90 opacity-0 transition-all">
-                            <div class="p-4 text-white">
-                                <h5 class="fw-bold">Compétences acquises</h5>
-                                <p class="small">Maîtrise complète du développement web front-end et back-end</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Carte 3 -->
-            <div class="col-md-4 animate__animated" data-animation="fadeInUp" data-delay="0.4s">
-                <div class="card h-100 border-0 shadow-lg hover-effect-3d">
-                    <div class="card-body text-center p-4 position-relative">
-                        <div class="education-icon mb-3">
-                            <div class="icon-bg bg-primary-light rounded-circle p-3 mx-auto">
-                                <i class="fas fa-database fa-2x text-primary"></i>
-                            </div>
-                        </div>
-                        <div class="year-badge bg-primary text-white rounded-pill px-3 py-1 d-inline-block mb-3">
-                            2025
-                        </div>
-                        <h3 class="h4 fw-bold mt-2 text-white">Hall Tech Africa</h3>
-                        <h4 class="h5 text-primary mb-3">Data Analyse</h4>
-                        <div class="divider-sm bg-primary mx-auto my-3"></div>
-                        <ul class="list-unstyled text-start ps-3 text-light">
-                            <li class="mb-2 d-flex align-items-center">
-                                <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>Python & R</span>
-                            </li>
-                            <li class="mb-2 d-flex align-items-center">
-                                <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>Java & Scala</span>
-                            </li>
-                            <li class="mb-2 d-flex align-items-center">
-                                <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>SQL</span>
-                            </li>
-                            <li class="mb-2 d-flex align-items-center">
-                                <i class="fas fa-check-circle text-primary me-2"></i>
-                                <span>JavaScript</span>
-                            </li>
-                        </ul>
-                        <div class="hover-content position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-primary bg-opacity-90 opacity-0 transition-all">
-                            <div class="p-4 text-white">
-                                <h5 class="fw-bold">Compétences acquises</h5>
-                                <p class="small">Expertise en analyse de données et traitement de big data</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<style>
-    /* Styles spécifiques à la section formation */
-    #education {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    }
-    
-    .education-shape {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.03);
-        animation: float 8s ease-in-out infinite;
-    }
-    
-    .education-shape.shape-1 {
-        width: 300px;
-        height: 300px;
-        top: -150px;
-        right: -150px;
-        animation-delay: 0s;
-    }
-    
-    .education-shape.shape-2 {
-        width: 200px;
-        height: 200px;
-        bottom: -100px;
-        left: -100px;
-        animation-delay: 2s;
-    }
-    
-    .education-shape.shape-3 {
-        width: 150px;
-        height: 150px;
-        top: 50%;
-        left: 10%;
-        animation-delay: 4s;
-    }
-    
-    .icon-bg {
-        width: 70px;
-        height: 70px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-    }
-    
-    .card {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1) !important;
-        transition: all 0.4s ease;
-        overflow: hidden;
-    }
-    
-    .hover-effect-3d:hover {
-        transform: translateY(-10px) scale(1.02);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3) !important;
-        border-color: rgba(78, 115, 223, 0.5) !important;
-    }
-    
-    .hover-effect-3d .icon-bg {
-        transform: scale(1.1);
-        background: rgba(78, 115, 223, 0.2) !important;
-    }
-    
-    .hover-content {
-        transition: all 0.4s ease;
-    }
-    
-    .hover-effect-3d:hover .hover-content {
-        opacity: 1 !important;
-    }
-    
-    .year-badge {
-        transition: all 0.3s ease;
-    }
-    
-    .hover-effect-3d:hover .year-badge {
-        background: #fff !important;
-        color: var(--primary-color) !important;
-    }
-    
-    /* Animations */
-    @keyframes float {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
-    }
-    
-    /* Styles réutilisés du footer */
-    .wave-animation {
-        height: 150px;
-        z-index: 0;
-    }
-    
-    .wave-animation svg {
-        width: calc(100% + 1.3px);
-        height: 100%;
-        transform-origin: center;
-        animation: waveAnimation 15s linear infinite;
-    }
-    
-    .shape-fill {
-        fill: rgba(78, 115, 223, 0.15);
-    }
-    
-    @keyframes waveAnimation {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-    }
-    
-    .particles-js {
-        z-index: 0;
-        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234e73df' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-        animation: particlesAnimation 20s linear infinite;
-    }
-    
-    @keyframes particlesAnimation {
-        from { background-position: 0 0; }
-        to { background-position: 100px 100px; }
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-        .wave-animation {
-            height: 100px;
+        .timeline-badge:hover {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.3);
         }
-        
-        .education-shape {
-            display: none;
-        }
-        
-        .card {
-            margin-bottom: 20px;
-        }
-    }
-</style>
 
-<script>
-    // Animation au scroll
-    document.addEventListener('DOMContentLoaded', function() {
-        // Animation des vagues supplémentaires
-        const waves = document.Something is wrongSelectorAll('.wave-animation path');
-        waves.forEach((wave, index) => {
-            wave.style.animation = `waveAnimation ${15 + (index * 3)}s linear infinite`;
-        });
-        
-        // Animation des éléments au scroll
-        const animateOnScroll = () => {
-            const elements = document.Something is wrongSelectorAll('[data-animation]');
-            
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (elementPosition < windowHeight - 100) {
-                    const animation = element.getAttribute('data-animation');
-                    element.classList.add('animate__animated', `animate__${animation}`);
-                }
-            });
-        };
-        
-        window.addEventListener('scroll', animateOnScroll);
-        animateOnScroll(); // Exécuter une première fois au chargement
-    });
-</script>
-
-    </section>
-
-    <!-- Section Portfolio avec fond blanc animé -->
-<section id="portfolio" class="py-5 bg-white position-relative overflow-hidden">
-    <!-- Vagues animées colorées en bas -->
-    <div class="wave-animation position-absolute bottom-0 start-0 w-100">
-        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" 
-                  opacity=".25" class="shape-fill"></path>
-            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" 
-                  opacity=".5" class="shape-fill"></path>
-            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" 
-                  class="shape-fill"></path>
-        </svg>
-    </div>
-
-    <!-- Particules flottantes -->
-    <div class="particles-js position-absolute top-0 start-0 w-100 h-100"></div>
-
-    <div class="container position-relative z-1">
-        <!-- En-tête avec animation -->
-        <div class="section-header text-center mb-5 animate__animated" data-animation="fadeInDown">
-            <div class="divider bg-gradient-primary mx-auto mb-3"></div>
-            <h2 class="display-5 fw-bold text-dark">Portfolio</h2>
-            <p class="lead text-muted">Mes réalisations récentes</p>
-        </div>
-        
-        <!-- Filtres avec animation -->
-        <div class="row animate__animated" data-animation="fadeIn">
-            <div class="col-12">
-                <div class="portfolio-filters text-center mb-4">
-                    <button class="btn btn-outline-dark active mx-1 mb-2 hover-grow" data-filter="*">Tous</button>
-                    <button class="btn btn-outline-dark mx-1 mb-2 hover-grow" data-filter=".web">Web</button>
-                    <button class="btn btn-outline-dark mx-1 mb-2 hover-grow" data-filter=".mobile">Mobile</button>
-                    <button class="btn btn-outline-dark mx-1 mb-2 hover-grow" data-filter=".design">Design</button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Grille Portfolio -->
-        <div class="row g-4 portfolio-grid">
-            <!-- Item 1 - Facebook Share -->
-            <div class="col-md-4 col-sm-6 portfolio-item web animate__animated" data-animation="fadeInUp">
-                <div class="portfolio-card shadow-sm rounded-4 overflow-hidden h-100 transform-scale">
-                    <div class="portfolio-img-container">
-                        <img src="images/facebook_share.png.png" class="img-fluid w-100" alt="Facebook Share">
-                        <div class="portfolio-overlay d-flex flex-column justify-content-center">
-                            <div class="portfolio-content text-center p-3 translate-up">
-                                <h3 class="text-white mb-2">Facebook Share</h3>
-                                <p class="text-light mb-3">Intégration du bouton Share</p>
-                                <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-light btn-sm rounded-pill me-2 hover-grow">
-                                        <i class="fas fa-eye me-1"></i> Détails
-                                    </a>
-                                    <a href="http://www.facebook.com" target="_blank" class="btn btn-primary btn-sm rounded-pill hover-grow">
-                                        <i class="fas fa-external-link-alt me-1"></i> Visiter
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-tech p-3 bg-light">
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">React</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">API</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">JavaScript</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 2 - Google Translate -->
-            <div class="col-md-4 col-sm-6 portfolio-item web animate__animated" data-animation="fadeInUp" data-delay="0.1s">
-                <div class="portfolio-card shadow-sm rounded-4 overflow-hidden h-100 transform-scale">
-                    <div class="portfolio-img-container">
-                        <img src="images/google_translate.png.png" class="img-fluid w-100" alt="Google Translate">
-                        <div class="portfolio-overlay d-flex flex-column justify-content-center">
-                            <div class="portfolio-content text-center p-3 translate-up">
-                                <h3 class="text-white mb-2">Google Translate</h3>
-                                <p class="text-light mb-3">Fonctionnalité audio</p>
-                                <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-light btn-sm rounded-pill me-2 hover-grow">
-                                        <i class="fas fa-eye me-1"></i> Détails
-                                    </a>
-                                    <a href="http://www.google.com" target="_blank" class="btn btn-primary btn-sm rounded-pill hover-grow">
-                                        <i class="fas fa-external-link-alt me-1"></i> Visiter
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-tech p-3 bg-light">
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">Vue.js</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">Web Audio</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">i18n</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 3 - Twitter Video -->
-            <div class="col-md-4 col-sm-6 portfolio-item mobile animate__animated" data-animation="fadeInUp" data-delay="0.2s">
-                <div class="portfolio-card shadow-sm rounded-4 overflow-hidden h-100 transform-scale">
-                    <div class="portfolio-img-container">
-                        <img src="images/twitter_video.png.png" class="img-fluid w-100" alt="Twitter Video">
-                        <div class="portfolio-overlay d-flex flex-column justify-content-center">
-                            <div class="portfolio-content text-center p-3 translate-up">
-                                <h3 class="text-white mb-2">Twitter Video</h3>
-                                <p class="text-light mb-3">Intégration vidéo mobile</p>
-                                <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-light btn-sm rounded-pill me-2 hover-grow">
-                                        <i class="fas fa-eye me-1"></i> Détails
-                                    </a>
-                                    <a href="http://www.twitter.com" target="_blank" class="btn btn-primary btn-sm rounded-pill hover-grow">
-                                        <i class="fas fa-external-link-alt me-1"></i> Visiter
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-tech p-3 bg-light">
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">React Native</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">Video.js</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">iOS/Android</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 4 - YouTube -->
-            <div class="col-md-4 col-sm-6 portfolio-item mobile animate__animated" data-animation="fadeInUp">
-                <div class="portfolio-card shadow-sm rounded-4 overflow-hidden h-100 transform-scale">
-                    <div class="portfolio-img-container">
-                        <img src="images/youtube.png.png" class="img-fluid w-100" alt="YouTube">
-                        <div class="portfolio-overlay d-flex flex-column justify-content-center">
-                            <div class="portfolio-content text-center p-3 translate-up">
-                                <h3 class="text-white mb-2">YouTube</h3>
-                                <p class="text-light mb-3">Nouveau design mobile</p>
-                                <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-light btn-sm rounded-pill me-2 hover-grow">
-                                        <i class="fas fa-eye me-1"></i> Détails
-                                    </a>
-                                    <a href="http://www.youtube.com" target="_blank" class="btn btn-primary btn-sm rounded-pill hover-grow">
-                                        <i class="fas fa-external-link-alt me-1"></i> Visiter
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-tech p-3 bg-light">
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">Flutter</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">Dart</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">Material Design</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 5 - Twitter Retweet -->
-            <div class="col-md-4 col-sm-6 portfolio-item web animate__animated" data-animation="fadeInUp" data-delay="0.1s">
-                <div class="portfolio-card shadow-sm rounded-4 overflow-hidden h-100 transform-scale">
-                    <div class="portfolio-img-container">
-                        <img src="images/twitter_retweet.png.png" class="img-fluid w-100" alt="Twitter Retweet">
-                        <div class="portfolio-overlay d-flex flex-column justify-content-center">
-                            <div class="portfolio-content text-center p-3 translate-up">
-                                <h3 class="text-white mb-2">Twitter Retweet</h3>
-                                <p class="text-light mb-3">Fonctionnalité Retweet</p>
-                                <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-light btn-sm rounded-pill me-2 hover-grow">
-                                        <i class="fas fa-eye me-1"></i> Détails
-                                    </a>
-                                    <a href="http://www.twitter.com" target="_blank" class="btn btn-primary btn-sm rounded-pill hover-grow">
-                                        <i class="fas fa-external-link-alt me-1"></i> Visiter
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-tech p-3 bg-light">
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">Node.js</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">Express</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">REST API</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 6 - Facebook Video -->
-            <div class="col-md-4 col-sm-6 portfolio-item design animate__animated" data-animation="fadeInUp" data-delay="0.2s">
-                <div class="portfolio-card shadow-sm rounded-4 overflow-hidden h-100 transform-scale">
-                    <div class="portfolio-img-container">
-                        <img src="images/facebook_video.png.png" class="img-fluid w-100" alt="Facebook Video">
-                        <div class="portfolio-overlay d-flex flex-column justify-content-center">
-                            <div class="portfolio-content text-center p-3 translate-up">
-                                <h3 class="text-white mb-2">Facebook Video</h3>
-                                <p class="text-light mb-3">Autoplay en mute</p>
-                                <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-light btn-sm rounded-pill me-2 hover-grow">
-                                        <i class="fas fa-eye me-1"></i> Détails
-                                    </a>
-                                    <a href="http://www.facebook.com" target="_blank" class="btn btn-primary btn-sm rounded-pill hover-grow">
-                                        <i class="fas fa-external-link-alt me-1"></i> Visiter
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-tech p-3 bg-light">
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">UI/UX</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">Figma</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">Prototyping</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 7 - Whatsapp Video -->
-            <div class="col-md-4 col-sm-6 portfolio-item design animate__animated" data-animation="fadeInUp">
-                <div class="portfolio-card shadow-sm rounded-4 overflow-hidden h-100 transform-scale">
-                    <div class="portfolio-img-container">
-                        <img src="images/whatsapp_video .png.jpeg" class="img-fluid w-100" alt="Whatsapp Video">
-                        <div class="portfolio-overlay d-flex flex-column justify-content-center">
-                            <div class="portfolio-content text-center p-3 translate-up">
-                                <h3 class="text-white mb-2">Whatsapp Video</h3>
-                                <p class="text-light mb-3">Autoplay en mute</p>
-                                <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-light btn-sm rounded-pill me-2 hover-grow">
-                                        <i class="fas fa-eye me-1"></i> Détails
-                                    </a>
-                                    <a href="http://www.whatsapp.com" target="_blank" class="btn btn-primary btn-sm rounded-pill hover-grow">
-                                        <i class="fas fa-external-link-alt me-1"></i> Visiter
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-tech p-3 bg-light">
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">UI Design</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">Adobe XD</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">User Testing</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 8 - Instagram Video -->
-            <div class="col-md-4 col-sm-6 portfolio-item design animate__animated" data-animation="fadeInUp" data-delay="0.1s">
-                <div class="portfolio-card shadow-sm rounded-4 overflow-hidden h-100 transform-scale">
-                    <div class="portfolio-img-container">
-                        <img src="images/Instagram_video .png.jpeg" class="img-fluid w-100" alt="Instagram Video">
-                        <div class="portfolio-overlay d-flex flex-column justify-content-center">
-                            <div class="portfolio-content text-center p-3 translate-up">
-                                <h3 class="text-white mb-2">Instagram Video</h3>
-                                <p class="text-light mb-3">Autoplay en mute</p>
-                                <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-light btn-sm rounded-pill me-2 hover-grow">
-                                        <i class="fas fa-eye me-1"></i> Détails
-                                    </a>
-                                    <a href="http://www.Instagram.com" target="_blank" class="btn btn-primary btn-sm rounded-pill hover-grow">
-                                        <i class="fas fa-external-link-alt me-1"></i> Visiter
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-tech p-3 bg-light">
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">Motion Design</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">After Effects</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">Micro-interactions</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Item 9 - TikTok Video -->
-            <div class="col-md-4 col-sm-6 portfolio-item design animate__animated" data-animation="fadeInUp" data-delay="0.2s">
-                <div class="portfolio-card shadow-sm rounded-4 overflow-hidden h-100 transform-scale">
-                    <div class="portfolio-img-container">
-                        <img src="images/titok_video .png.jpeg" class="img-fluid w-100" alt="TikTok Video">
-                        <div class="portfolio-overlay d-flex flex-column justify-content-center">
-                            <div class="portfolio-content text-center p-3 translate-up">
-                                <h3 class="text-white mb-2">TikTok Video</h3>
-                                <p class="text-light mb-3">Autoplay en mute</p>
-                                <div class="d-flex justify-content-center">
-                                    <a href="#" class="btn btn-light btn-sm rounded-pill me-2 hover-grow">
-                                        <i class="fas fa-eye me-1"></i> Détails
-                                    </a>
-                                    <a href="http://www.tiktok.com" target="_blank" class="btn btn-primary btn-sm rounded-pill hover-grow">
-                                        <i class="fas fa-external-link-alt me-1"></i> Visiter
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="portfolio-tech p-3 bg-light">
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">UX Research</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">User Flows</span>
-                        <span class="badge bg-primary bg-opacity-10 text-primary me-1 mb-1">A/B Testing</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<style>
-    /* Variables */
-    :root {
-        --primary-color: #4e73df;
-        --primary-hover: #3a5ec0;
-        --transition-speed: 0.4s;
-    }
-    
-    /* Vagues animées colorées */
-    .wave-animation {
-        height: 150px;
-        z-index: 0;
-    }
-    
-    .wave-animation svg {
-        width: calc(100% + 1.3px);
-        height: 100%;
-        transform-origin: center;
-        animation: waveAnimation 15s linear infinite;
-    }
-    
-    .shape-fill {
-        fill: rgba(78, 115, 223, 0.1);
-    }
-    
-    @keyframes waveAnimation {
-        0% { transform: translateX(0); }
-        100% { transform: translateX(-50%); }
-    }
-    
-    /* Particules flottantes */
-    .particles-js {
-        z-index: 0;
-        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234e73df' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
-        animation: particlesAnimation 20s linear infinite;
-    }
-    
-    @keyframes particlesAnimation {
-        from { background-position: 0 0; }
-        to { background-position: 100px 100px; }
-    }
-    
-    /* Filtres */
-    .portfolio-filters .btn {
-        transition: all var(--transition-speed) ease;
-        position: relative;
-        overflow: hidden;
-        border-width: 2px;
-    }
-    
-    .portfolio-filters .btn::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0;
-        height: 2px;
-        background: var(--primary-color);
-        transition: width var(--transition-speed) ease;
-    }
-    
-    .portfolio-filters .btn:hover,
-    .portfolio-filters .btn.active {
-        color: var(--primary-color) !important;
-        border-color: var(--primary-color);
-    }
-    
-    .portfolio-filters .btn.active::after,
-    .portfolio-filters .btn:hover::after {
-        width: 70%;
-    }
-    
-    /* Cartes Portfolio */
-    .portfolio-card {
-        transition: all var(--transition-speed) ease;
-        border: 1px solid rgba(0,0,0,0.05);
-    }
-    
-    .transform-scale {
-        transform: scale(0.98);
-    }
-    
-    .portfolio-card:hover {
-        transform: scale(1.02);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
-        border-color: rgba(78, 115, 223, 0.2) !important;
-    }
-    
-    .portfolio-img-container {
-        position: relative;
-        overflow: hidden;
-        height: 200px;
-    }
-    
-    .portfolio-img-container img {
-        transition: all 0.8s ease;
-        height: 100%;
-        object-fit: cover;
-    }
-    
-    .portfolio-card:hover img {
-        transform: scale(1.1);
-    }
-    
-    .portfolio-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.7);
-        opacity: 0;
-        transition: all var(--transition-speed) ease;
-    }
-    
-    .portfolio-card:hover .portfolio-overlay {
-        opacity: 1;
-    }
-    
-    .translate-up {
-        transform: translateY(20px);
-        transition: transform var(--transition-speed) ease;
-        opacity: 0;
-    }
-    
-    .portfolio-card:hover .translate-up {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    
-    /* Badges technologies */
-    .portfolio-tech {
-        transition: all var(--transition-speed) ease;
-    }
-    
-    .portfolio-card:hover .portfolio-tech {
-        background-color: rgba(78, 115, 223, 0.05) !important;
-    }
-    
-    /* Effets généraux */
-    .hover-grow {
-        transition: all var(--transition-speed) ease;
-    }
-    
-    .hover-grow:hover {
-        transform: scale(1.05);
-    }
-    
-    /* Animations */
-    [data-animation] {
-        opacity: 0;
-    }
-    
-    .animate__animated {
-        animation-duration: 1s;
-        animation-fill-mode: both;
-    }
-    
-    [data-animation="fadeInUp"] { animation-name: fadeInUp; }
-    [data-animation="fadeInDown"] { animation-name: fadeInDown; }
-    [data-animation="fadeIn"] { animation-name: fadeIn; }
-    
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
+        .timeline-panel {
+            position: relative;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 25px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    @keyframes fadeInDown {
-        from {
-            opacity: 0;
-            transform: translateY(-30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-    
-    /* Responsive */
-    @media (max-width: 768px) {
-        .wave-animation {
-            height: 100px;
-        }
-        
-        .portfolio-img-container {
-            height: 150px;
-        }
-    }
-</style>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Animation au scroll
-        const animateOnScroll = () => {
-            const elements = document.Something is wrongSelectorAll('[data-animation]');
-            
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (elementPosition < windowHeight - 100) {
-                    const animation = element.getAttribute('data-animation');
-                    const delay = element.getAttribute('data-delay') || '0s';
-                    
-                    element.style.animation = `${animation} 0.8s ${delay} forwards`;
-                }
-            });
-        };
-        
-        window.addEventListener('scroll', animateOnScroll);
-        animateOnScroll();
-        
-        // Filtrage
-        const filterButtons = document.Something is wrongSelectorAll('.portfolio-filters .btn');
-        const portfolioItems = document.Something is wrongSelectorAll('.portfolio-item');
-        
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                const filterValue = this.getAttribute('data-filter');
-                
-                portfolioItems.forEach(item => {
-                    if (filterValue === '*' || item.classList.contains(filterValue.substring(1))) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            });
-        });
-        
-        // Effet parallax sur les vagues
-        window.addEventListener('mousemove', (e) => {
-            const x = e.clientX / window.innerWidth;
-            const wave = document.Something is wrongSelector('.wave-animation svg');
-            if (wave) {
-                wave.style.transform = `translateX(${x * -10}px)`;
+        .timeline-panel:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .company-logo {
+            filter: brightness(0) invert(1);
+            transition: all 0.5s ease;
+            max-height: 40px;
+        }
+
+        .timeline-panel:hover .company-logo {
+            filter: none;
+            transform: scale(1.1);
+        }
+
+        .timeline-heading h3 {
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .timeline-heading h4 {
+            color: var(--success-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .timeline-heading p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+        }
+
+        .timeline-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .timeline-body li {
+            color: white;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-body li:hover {
+            transform: translateX(5px);
+        }
+
+        /* Section header */
+        .section-header {
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .divider {
+            width: 60px;
+            height: 4px;
+            background: white;
+            margin: 0 auto 1rem;
+            border-radius: 2px;
+        }
+
+        /* Animations personnalisées */
+        @keyframes fadeInLeftCustom {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
             }
-        });
-    });
-</script>
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRightCustom {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-fade-in-left {
+            animation: fadeInLeftCustom 1s ease forwards;
+        }
+
+        .animate-fade-in-right {
+            animation: fadeInRightCustom 1s ease forwards;
+        }
+
+        /* Effet de brillance sur les panels */
+        .timeline-panel::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, rgba(255,255,255,0), rgba(255,255,255,0.3), rgba(255,255,255,0));
+            border-radius: 18px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .timeline-panel:hover::before {
+            opacity: 1;
+        }
+        
+        /* Titre de démonstration */
+        .demo-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #0a504a;
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-badge {
+                left: 11px !important;
+                right: auto !important;
+            }
+            
+            .wave-container {
+                height: 100px;
+            }
+        }
+    </style>
+
+
+    
+   <!-- Section Expérience Professionnelle améliorée -->
+    <section id="experience" class="position-relative py-5 overflow-hidden">
+        <!-- Vagues animées en bas -->
+        <div class="wave-animation position-absolute bottom-0 start-0 w-100">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" 
+                      opacity=".25" class="shape-fill"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" 
+                      opacity=".5" class="shape-fill"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" 
+                      class="shape-fill"></path>
+            </svg>
+        </div>
+
+       <!-- Section Expérience Professionnelle améliorée -->
+    <section id="experience" class="position-relative py-5 overflow-hidden">
+        <!-- Vagues animées améliorées -->
+        <div class="wave-container">
+            <div class="wave wave1"></div>
+            <div class="wave wave2"></div>
+            <div class="wave wave3"></div>
+        </div>
+
+        <!-- Particules animées -->
+        <div class="particles-container" id="particles-container"></div>
+
+        <div class="container position-relative z-1">
+            <div class="section-header text-center mb-5">
+                <div class="divider mx-auto mb-3"></div>
+                <h2 class="display-4 fw-bold text-white">Expérience Professionnelle</h2>
+                <p class="lead text-light">Mon parcours en entreprise</p>
+            </div>
+            
+            <div class="timeline">
+                <!-- Item 1 - Google -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="images/google.png.png" alt="Google" class="company-logo me-3" width="80">
+                                <div>
+                                    <h4 class="text-success mb-0">Développeur Web Sénior</h4>
+                                </div>
+                            </div>
+                            <p class="mb-3">
+                                <i class="far fa-calendar-alt me-2"></i>2020 - 2021
+                            </p>
+                        </div>
+                        <div class="timeline-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-3 d-flex">
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>🚀 Ajout de la possibilité d'écouter une traduction dans Google Translate📲✨</span>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>🚀 Développement de Google Suggest en mode Offline 📲✨</span>
+                                </li>
+                                <li class="d-flex">
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>🚀 Nouveau design du player de YouTube adapté au mobile 📲✨</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 2 - Facebook -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="images/facebook.png" alt="Facebook" class="company-logo me-3" width="30">
+                                <div>
+                                    <h3 class="mb-0">Facebook</h3>
+                                    <h4 class="text-success mb-0">Développeur Web</h4>
+                                </div>
+                            </div>
+                            <p class="mb-3">
+                                <i class="far fa-calendar-alt me-2"></i>2021 - 2022
+                            </p>
+                        </div>
+                        <div class="timeline-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-3 d-flex">
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>🚀 Développement du bouton Share pour les applis Web mobile 📲✨</span>
+                                </li>
+                                <li class="d-flex">
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>🚀 Lancement automatique des vidéos en mode mute depuis la Timeline 📲✨</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 3 - Twitter -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="images/twitter.png" alt="Twitter" class="company-logo me-3" width="30">
+                                <div>
+                                    <h3 class="mb-0">Twitter</h3>
+                                    <h4 class="text-success mb-0">Développeur Web Junior</h4>
+                                </div>
+                            </div>
+                            <p class="mb-3">
+                                <i class="far fa-calendar-alt me-2"></i>2022 - 2023
+                            </p>
+                        </div>
+                        <div class="timeline-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-3 d-flex">
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>🚀 Création et Développement du Retweet pour l'appli Web 📲✨</span>
+                                </li>
+                                <li class="d-flex">
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>🚀 Intégration des vidéos sur les applis web mobile 📲✨</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 4 - Instagram -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="images/Instagram_video .png.jpeg" alt="Instagram" class="company-logo me-3" width="30">
+                                <div>
+                                    <h3 class="mb-0">Instagram</h3>
+                                    <h4 class="text-success mb-0">Développeur Web Junior</h4>
+                                </div>
+                            </div>
+                            <p class="mb-3">
+                                <i class="far fa-calendar-alt me-2"></i>2023 - 2024
+                            </p>
+                        </div>
+                        <div class="timeline-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-3 d-flex">
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>🚀 Création & Développement du module Repost pour notre appli web 💻✨</span>
+                                </li>
+                                <li class="d-flex">
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>🚀 Intégration des vidéos sur les applis web mobile 💻✨</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 5 - WhatsApp -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="images/whatsapp_video .png.jpeg" alt="WhatsApp" class="company-logo me-3" width="30">
+                                <div>
+                                    <h3 class="mb-0">WhatsApp</h3>
+                                    <h4 class="text-success mb-0">Développeur Web Junior</h4>
+                                </div>
+                            </div>
+                            <p class="mb-3">
+                                <i class="far fa-calendar-alt me-2"></i>2024 - 2025
+                            </p>
+                        </div>
+                        <div class="timeline-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-3 d-flex">
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>💬 Création & Développement de la fonction Transfert rapide pour notre appli web 📲✨</span>
+                                </li>
+                                <li class="d-flex">
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>💬 Intégration des vidéos sur les applis web mobile 📲✨</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 6 - Odoo -->
+                <div class="timeline-item">
+                    <div class="timeline-badge">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="images/odoo.png.png" alt="Odoo" class="company-logo me-3" width="60">
+                                <div>
+                                    <h3 class="mb-0">Odoo</h3>
+                                    <h4 class="text-success mb-0">Développeur Web Junior</h4>
+                                </div>
+                            </div>
+                            <p class="mb-3">
+                                <i class="far fa-calendar-alt me-2"></i> 2025
+                            </p>
+                        </div>
+                        <div class="timeline-body">
+                            <ul class="list-unstyled">
+                                <li class="mb-3 d-flex">
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>🚀 Création & Développement du Repost Odoo pour notre appli web 🎥✨</span>
+                                </li>
+                                <li class="mb-3 d-flex">
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>🚀 Configuration et analyse des modules 🎥✨</span>
+                                </li>
+                                <li class="d-flex">  
+                                    <div class="timeline-icon bg-success rounded-circle flex-shrink-0 me-3">
+                                        <i class="fas fa-check text-white"></i>
+                                    </div>
+                                    <span>🚀 Assistance des clients 🎥✨</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
+
+    
+
+
+    <style>
+        :root {
+            --primary-color: #4e73df;
+            --primary-light: rgba(78, 115, 223, 0.15);
+            --secondary-color: #6c757d;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        /* Section Formation améliorée */
+        #education {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            position: relative;
+            padding: 100px 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Vagues animées améliorées */
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            z-index: 1;
+            transform: rotate(180deg);
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background-repeat: repeat-x;
+            background-position: 0 bottom;
+            transform-origin: center bottom;
+        }
+
+        .wave1 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%234e73df'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%234e73df'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%234e73df'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 25s linear infinite;
+        }
+
+        .wave2 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%234e73df'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%234e73df'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%234e73df'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 20s linear infinite;
+            animation-delay: -5s;
+            opacity: 0.7;
+        }
+
+        .wave3 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%234e73df'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%234e73df'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%234e73df'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 15s linear infinite;
+            animation-delay: -2s;
+            opacity: 0.4;
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(-25%);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Particules animées améliorées */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(78, 115, 223, 0.5);
+            border-radius: 50%;
+            animation: floatParticle 15s infinite ease-in-out;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(-20px) translateX(10px) rotate(36deg) scale(1);
+            }
+            30% {
+                transform: translateY(-60px) translateX(30px) rotate(108deg) scale(1.2);
+            }
+            50% {
+                transform: translateY(-100px) translateX(50px) rotate(180deg) scale(1);
+            }
+            70% {
+                transform: translateY(-140px) translateX(70px) rotate(252deg) scale(0.8);
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-200px) translateX(100px) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Éléments décoratifs */
+        .education-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .education-shape.shape-1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: -150px;
+            animation-delay: 0s;
+        }
+        
+        .education-shape.shape-2 {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            left: -100px;
+            animation-delay: 2s;
+        }
+        
+        .education-shape.shape-3 {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            left: 10%;
+            animation-delay: 4s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Cartes de formation */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            transition: all 0.4s ease;
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            border-color: rgba(78, 115, 223, 0.5);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .icon-bg {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background: rgba(78, 115, 223, 0.1);
+        }
+        
+        .card:hover .icon-bg {
+            transform: scale(1.1);
+            background: rgba(78, 115, 223, 0.2);
+        }
+
+        .year-badge {
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover .year-badge {
+            background: #fff !important;
+            color: var(--primary-color) !important;
+        }
+
+        .hover-content {
+            transition: all 0.4s ease;
+            opacity: 0;
+        }
+        
+        .card:hover .hover-content {
+            opacity: 1;
+        }
+
+        /* Section header */
+        .section-header {
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .divider {
+            width: 60px;
+            height: 4px;
+            background: white;
+            margin: 0 auto 1rem;
+            border-radius: 2px;
+        }
+        
+        .divider-sm {
+            width: 40px;
+            height: 2px;
+        }
+
+        /* Animations personnalisées */
+        @keyframes fadeInUpCustom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUpCustom 1s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .wave-container {
+                height: 100px;
+            }
+            
+            .education-shape {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+
+    <!-- Section Formation améliorée -->
+    <section id="education" class="position-relative py-5 overflow-hidden">
+        <!-- Vagues animées améliorées -->
+        <div class="wave-container">
+            <div class="wave wave1"></div>
+            <div class="wave wave2"></div>
+            <div class="wave wave3"></div>
+        </div>
+
+        <!-- Particules animées -->
+        <div class="particles-container" id="particles-container"></div>
+
+        <!-- Éléments décoratifs -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 z-0">
+            <div class="education-shape shape-1"></div>
+            <div class="education-shape shape-2"></div>
+            <div class="education-shape shape-3"></div>
+        </div>
+
+        <div class="container position-relative z-1">
+            <div class="section-header text-center mb-5">
+                <div class="divider mx-auto mb-3"></div>
+                <h2 class="display-4 fw-bold text-white">Formation</h2>
+                <p class="lead text-light">Mon parcours académique</p>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Carte 1 -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-body text-center p-4 position-relative">
+                            <div class="education-icon mb-3">
+                                <div class="icon-bg bg-primary-light rounded-circle p-3 mx-auto">
+                                    <i class="fas fa-graduation-cap fa-2x text-primary"></i>
+                                </div>
+                            </div>
+                            <div class="year-badge bg-primary text-white rounded-pill px-3 py-1 d-inline-block mb-3">
+                                2020 - 2021
+                            </div>
+                            <h3 class="h4 fw-bold mt-2 text-white">Institut Sainte Marie</h3>
+                            <h4 class="h5 text-primary mb-3">BTS Informatique</h4>
+                            <div class="divider-sm bg-primary mx-auto my-3"></div>
+                            <ul class="list-unstyled text-start ps-3 text-light">
+                                <li class="mb-2 d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-primary me-2"></i>
+                                    <span>Réseaux Informatiques</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-primary me-2"></i>
+                                    <span>Télécommunications</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-primary me-2"></i>
+                                    <span>Systèmes d'information</span>
+                                </li>
+                            </ul>
+                            <div class="hover-content position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-primary bg-opacity-90 opacity-0 transition-all">
+                                <div class="p-4 text-white">
+                                    <h5 class="fw-bold">Compétences acquises</h5>
+                                    <p class="small">Formation complète en infrastructure réseau et systèmes d'information</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Carte 2 -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-body text-center p-4 position-relative">
+                            <div class="education-icon mb-3">
+                                <div class="icon-bg bg-primary-light rounded-circle p-3 mx-auto">
+                                    <i class="fas fa-laptop-code fa-2x text-primary"></i>
+                                </div>
+                            </div>
+                            <div class="year-badge bg-primary text-white rounded-pill px-3 py-1 d-inline-block mb-3">
+                                2024
+                            </div>
+                            <h3 class="h4 fw-bold mt-2 text-white">Happy Coders Academy</h3>
+                            <h4 class="h5 text-primary mb-3">Développeur Web</h4>
+                            <div class="divider-sm bg-primary mx-auto my-3"></div>
+                            <ul class="list-unstyled text-start ps-3 text-light">
+                                <li class="mb-2 d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-primary me-2"></i>
+                                    <span>HTML/CSS & JavaScript</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-primary me-2"></i>
+                                    <span>jQuery & Bootstrap</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-primary me-2"></i>
+                                    <span>PHP & MySQL</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-primary me-2"></i>
+                                    <span>Responsive Design</span>
+                                </li>
+                            </ul>
+                            <div class="hover-content position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-primary bg-opacity-90 opacity-0 transition-all">
+                                <div class="p-4 text-white">
+                                    <h5 class="fw-bold">Compétences acquises</h5>
+                                    <p class="small">Maîtrise complète du développement web front-end et back-end</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Carte 3 -->
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-lg">
+                        <div class="card-body text-center p-4 position-relative">
+                            <div class="education-icon mb-3">
+                                <div class="icon-bg bg-primary-light rounded-circle p-3 mx-auto">
+                                    <i class="fas fa-database fa-2x text-primary"></i>
+                                </div>
+                            </div>
+                            <div class="year-badge bg-primary text-white rounded-pill px-3 py-1 d-inline-block mb-3">
+                                2025
+                            </div>
+                            <h3 class="h4 fw-bold mt-2 text-white">Hall Tech Africa</h3>
+                            <h4 class="h5 text-primary mb-3">Data Analyse</h4>
+                            <div class="divider-sm bg-primary mx-auto my-3"></div>
+                            <ul class="list-unstyled text-start ps-3 text-light">
+                                <li class="mb-2 d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-primary me-2"></i>
+                                    <span>Python</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-primary me-2"></i>
+                                    <span>R</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-primary me-2"></i>
+                                    <span>SQL</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-center">
+                                    <i class="fas fa-check-circle text-primary me-2"></i>
+                                    <span>Scala</span>
+                                </li>
+                            </ul>
+                            <div class="hover-content position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-primary bg-opacity-90 opacity-0 transition-all">
+                                <div class="p-4 text-white">
+                                    <h5 class="fw-bold">Compétences acquises</h5>
+                                    <p class="small">Expertise en analyse de données et traitement de big data</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<style>
+        :root {
+            --primary-color: #4e73df;
+            --primary-hover: #3a5ec0;
+            --transition-speed: 0.4s;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --card-hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        /* Section Portfolio améliorée */
+        #portfolio {
+            background: #ffffff;
+            position: relative;
+            padding: 100px 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Vagues animées améliorées */
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background-repeat: repeat-x;
+            background-position: 0 bottom;
+            transform-origin: center bottom;
+        }
+
+        .wave1 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%234e73df'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%234e73df'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%234e73df'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 25s linear infinite;
+        }
+
+        .wave2 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%234e73df'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%234e73df'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%234e73df'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 20s linear infinite;
+            animation-delay: -5s;
+            opacity: 0.7;
+        }
+
+        .wave3 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%234e73df'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%234e73df'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%234e73df'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 15s linear infinite;
+            animation-delay: -2s;
+            opacity: 0.4;
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(-25%);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Particules animées améliorées */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(78, 115, 223, 0.3);
+            border-radius: 50%;
+            animation: floatParticle 15s infinite ease-in-out;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(-20px) translateX(10px) rotate(36deg) scale(1);
+            }
+            30% {
+                transform: translateY(-60px) translateX(30px) rotate(108deg) scale(1.2);
+            }
+            50% {
+                transform: translateY(-100px) translateX(50px) rotate(180deg) scale(1);
+            }
+            70% {
+                transform: translateY(-140px) translateX(70px) rotate(252deg) scale(0.8);
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-200px) translateX(100px) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Section header */
+        .section-header {
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .divider {
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 0 auto 1rem;
+            border-radius: 2px;
+        }
+
+        /* Filtres améliorés */
+        .portfolio-filters {
+            margin-bottom: 2.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 50px;
+            background: transparent;
+            color: #495057;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0 0.5rem 0.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+            z-index: -1;
+            border-radius: 50px;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .filter-btn:hover::before, .filter-btn.active::before {
+            left: 0;
+        }
+
+        /* Cartes Portfolio améliorées */
+        .portfolio-card {
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: var(--card-shadow);
+            height: 100%;
+            background: white;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .portfolio-img-container {
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+        }
+
+        .portfolio-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.6s ease;
+        }
+
+        .portfolio-card:hover .portfolio-img-container img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all 0.4s ease;
+            padding: 20px;
+        }
+
+        .portfolio-card:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-content {
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+
+        .portfolio-card:hover .portfolio-content {
+            transform: translateY(0);
+        }
+
+        .portfolio-tech {
+            padding: 15px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .tech-badge {
+            padding: 0.35rem 0.65rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: rgba(78, 115, 223, 0.1);
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Animations personnalisées */
+        @keyframes fadeInUpCustom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUpCustom 1s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .wave-container {
+                height: 150px;
+            }
+            
+            .portfolio-img-container {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .wave-container {
+                height: 100px;
+            }
+            
+            .portfolio-img-container {
+                height: 150px;
+            }
+            
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+ <style>
+        :root {
+            --primary-color: #4e73df;
+            --primary-hover: #3a5ec0;
+            --transition-speed: 0.4s;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --card-hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        /* Section Portfolio améliorée */
+        #portfolio {
+            background: #ffffff;
+            position: relative;
+            padding: 100px 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Vagues animées améliorées */
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background-repeat: repeat-x;
+            background-position: 0 bottom;
+            transform-origin: center bottom;
+        }
+
+        .wave1 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%234e73df'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%234e73df'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%234e73df'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 25s linear infinite;
+        }
+
+        .wave2 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%234e73df'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%234e73df'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%234e73df'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 20s linear infinite;
+            animation-delay: -5s;
+            opacity: 0.7;
+        }
+
+        .wave3 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%234e73df'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%234e73df'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%234e73df'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 15s linear infinite;
+            animation-delay: -2s;
+            opacity: 0.4;
+        }
+
+        /* Vagues améliorées avec effet 3D */
+        .wave4 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%234e73df'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%234e73df'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%234e73df'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 18s linear infinite;
+            animation-delay: -7s;
+            opacity: 0.6;
+            transform: scaleY(0.8) rotate(180deg);
+            filter: brightness(0.8);
+        }
+
+        .wave5 {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25' fill='%234e73df'/%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5' fill='%234e73df'/%3E%3Cpath d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' fill='%234e73df'/%3E%3C/svg%3E");
+            background-size: 1200px 100%;
+            animation: wave 22s linear infinite;
+            animation-delay: -10s;
+            opacity: 0.3;
+            transform: scaleY(0.6);
+            filter: brightness(1.2);
+        }
+
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(-25%);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Particules animées améliorées */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(78, 115, 223, 0.3);
+            border-radius: 50%;
+            animation: floatParticle 15s infinite ease-in-out;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(-20px) translateX(10px) rotate(36deg) scale(1);
+            }
+            30% {
+                transform: translateY(-60px) translateX(30px) rotate(108deg) scale(1.2);
+            }
+            50% {
+                transform: translateY(-100px) translateX(50px) rotate(180deg) scale(1);
+            }
+            70% {
+                transform: translateY(-140px) translateX(70px) rotate(252deg) scale(0.8);
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-200px) translateX(100px) rotate(360deg) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Section header */
+        .section-header {
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .divider {
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 0 auto 1rem;
+            border-radius: 2px;
+        }
+
+        /* Filtres améliorés */
+        .portfolio-filters {
+            margin-bottom: 2.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid #e9ecef;
+            border-radius: 50px;
+            background: transparent;
+            color: #495057;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0 0.5rem 0.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color);
+            transition: all 0.3s ease;
+            z-index: -1;
+            border-radius: 50px;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .filter-btn:hover::before, .filter-btn.active::before {
+            left: 0;
+        }
+
+        /* Cartes Portfolio améliorées */
+        .portfolio-card {
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: var(--card-shadow);
+            height: 100%;
+            background: white;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--card-hover-shadow);
+        }
+
+        .portfolio-img-container {
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+        }
+
+        .portfolio-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.6s ease;
+        }
+
+        .portfolio-card:hover .portfolio-img-container img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all 0.4s ease;
+            padding: 20px;
+        }
+
+        .portfolio-card:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-content {
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+
+        .portfolio-card:hover .portfolio-content {
+            transform: translateY(0);
+        }
+
+        .portfolio-tech {
+            padding: 15px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .tech-badge {
+            padding: 0.35rem 0.65rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: rgba(78, 115, 223, 0.1);
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        /* Animations personnalisées */
+        @keyframes fadeInUpCustom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUpCustom 1s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .wave-container {
+                height: 150px;
+            }
+            
+            .portfolio-img-container {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .wave-container {
+                height: 100px;
+            }
+            
+            .portfolio-img-container {
+                height: 150px;
+            }
+            
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    
+    <!-- Section Portfolio améliorée -->
+    <section id="portfolio" class="position-relative py-5 overflow-hidden">
+        <!-- Vagues animées améliorées -->
+        <div class="wave-container">
+            <div class="wave wave1"></div>
+            <div class="wave wave2"></div>
+            <div class="wave wave3"></div>
+            <div class="wave wave4"></div>
+            <div class="wave wave5"></div>
+        </div>
+
+        <!-- Particules animées -->
+        <div class="particles-container" id="particles-container"></div>
+
+        <div class="container position-relative z-1">
+            <!-- En-tête avec animation -->
+            <div class="section-header text-center mb-5">
+                <div class="divider mx-auto mb-3"></div>
+                <h2 class="display-4 fw-bold text-dark">Portfolio</h2>
+                <p class="lead text-muted">Mes réalisations récentes</p>
+            </div>
+            
+            <!-- Filtres avec animation -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="portfolio-filters text-center mb-4">
+                        <button class="filter-btn active" data-filter="*">Tous</button>
+                        <button class="filter-btn" data-filter=".web">Web</button>
+                        <button class="filter-btn" data-filter=".mobile">Mobile</button>
+                        <button class="filter-btn" data-filter=".design">Design</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grille Portfolio -->
+            <div class="row g-4 portfolio-grid">
+                <!-- Item 1 - Facebook Share -->
+                <div class="col-md-4 col-sm-6 portfolio-item web">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-container">
+                            <img src="images/facebook_share.png.png" class="img-fluid w-100" alt="Facebook Share">
+                            <div class="portfolio-overlay d-flex flex-column justify-content-center">
+                                <div class="portfolio-content text-center p-3">
+                                    <h3 class="text-white mb-2">Facebook Share</h3>
+                                    <p class="text-light mb-3">Intégration du bouton Share</p>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="#" class="btn btn-light btn-sm rounded-pill me-2">
+                                            <i class="fas fa-eye me-1"></i> Détails
+                                        </a>
+                                        <a href="http://www.facebook.com" target="_blank" class="btn btn-primary btn-sm rounded-pill">
+                                            <i class="fas fa-external-link-alt me-1"></i> Visiter
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-tech p-3">
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">API</span>
+                            <span class="tech-badge">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 2 - Google Translate -->
+                <div class="col-md-4 col-sm-6 portfolio-item web">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-container">
+                            <img src="images/google_translate.png.png" class="img-fluid w-100" alt="Google Translate">
+                            <div class="portfolio-overlay d-flex flex-column justify-content-center">
+                                <div class="portfolio-content text-center p-3">
+                                    <h3 class="text-white mb-2">Google Translate</h3>
+                                    <p class="text-light mb-3">Fonctionnalité audio</p>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="#" class="btn btn-light btn-sm rounded-pill me-2">
+                                            <i class="fas fa-eye me-1"></i> Détails
+                                        </a>
+                                        <a href="http://www.google.com" target="_blank" class="btn btn-primary btn-sm rounded-pill">
+                                            <i class="fas fa-external-link-alt me-1"></i> Visiter
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-tech p-3">
+                            <span class="tech-badge">Vue.js</span>
+                            <span class="tech-badge">Web Audio</span>
+                            <span class="tech-badge">i18n</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 3 - Twitter Video -->
+                <div class="col-md-4 col-sm-6 portfolio-item mobile">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-container">
+                            <img src="images/twitter_video.png.png" class="img-fluid w-100" alt="Twitter Video">
+                            <div class="portfolio-overlay d-flex flex-column justify-content-center">
+                                <div class="portfolio-content text-center p-3">
+                                    <h3 class="text-white mb-2">Twitter Video</h3>
+                                    <p class="text-light mb-3">Intégration vidéo mobile</p>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="#" class="btn btn-light btn-sm rounded-pill me-2">
+                                            <i class="fas fa-eye me-1"></i> Détails
+                                        </a>
+                                        <a href="http://www.twitter.com" target="_blank" class="btn btn-primary btn-sm rounded-pill">
+                                            <i class="fas fa-external-link-alt me-1"></i> Visiter
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-tech p-3">
+                            <span class="tech-badge">React Native</span>
+                            <span class="tech-badge">Video.js</span>
+                            <span class="tech-badge">iOS/Android</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 4 - YouTube -->
+                <div class="col-md-4 col-sm-6 portfolio-item mobile">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-container">
+                            <img src="images/youtube.png.png" class="img-fluid w-100" alt="YouTube">
+                            <div class="portfolio-overlay d-flex flex-column justify-content-center">
+                                <div class="portfolio-content text-center p-3">
+                                    <h3 class="text-white mb-2">YouTube</h3>
+                                    <p class="text-light mb-3">Nouveau design mobile</p>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="#" class="btn btn-light btn-sm rounded-pill me-2">
+                                            <i class="fas fa-eye me-1"></i> Détails
+                                        </a>
+                                        <a href="http://www.youtube.com" target="_blank" class="btn btn-primary btn-sm rounded-pill">
+                                            <i class="fas fa-external-link-alt me-1"></i> Visiter
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-tech p-3">
+                            <span class="tech-badge">Flutter</span>
+                            <span class="tech-badge">Dart</span>
+                            <span class="tech-badge">Material Design</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 5 - Twitter Retweet -->
+                <div class="col-md-4 col-sm-6 portfolio-item web">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-container">
+                            <img src="images/twitter_retweet.png.png" class="img-fluid w-100" alt="Twitter Retweet">
+                            <div class="portfolio-overlay d-flex flex-column justify-content-center">
+                                <div class="portfolio-content text-center p-3">
+                                    <h3 class="text-white mb-2">Twitter Retweet</h3>
+                                    <p class="text-light mb-3">Fonctionnalité Retweet</p>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="#" class="btn btn-light btn-sm rounded-pill me-2">
+                                            <i class="fas fa-eye me-1"></i> Détails
+                                        </a>
+                                        <a href="http://www.twitter.com" target="_blank" class="btn btn-primary btn-sm rounded-pill">
+                                            <i class="fas fa-external-link-alt me-1"></i> Visiter
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-tech p-3">
+                            <span class="tech-badge">Node.js</span>
+                            <span class="tech-badge">Express</span>
+                            <span class="tech-badge">REST API</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 6 - Facebook Video -->
+                <div class="col-md-4 col-sm-6 portfolio-item design">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-container">
+                            <img src="images/facebook_video.png.png" class="img-fluid w-100" alt="Facebook Video">
+                            <div class="portfolio-overlay d-flex flex-column justify-content-center">
+                                <div class="portfolio-content text-center p-3">
+                                    <h3 class="text-white mb-2">Facebook Video</h3>
+                                    <p class="text-light mb-3">Autoplay en mute</p>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="#" class="btn btn-light btn-sm rounded-pill me-2">
+                                            <i class="fas fa-eye me-1"></i> Détails
+                                        </a>
+                                        <a href="http://www.facebook.com" target="_blank" class="btn btn-primary btn-sm rounded-pill">
+                                            <i class="fas fa-external-link-alt me-1"></i> Visiter
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-tech p-3">
+                            <span class="tech-badge">UI/UX</span>
+                            <span class="tech-badge">Figma</span>
+                            <span class="tech-badge">Prototyping</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 7 - TikTok Video -->
+                <div class="col-md-4 col-sm-6 portfolio-item mobile">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-container">
+                            <img src="images/titok_video .png.jpeg" class="img-fluid w-100" alt="TikTok Video">
+                            <div class="portfolio-overlay d-flex flex-column justify-content-center">
+                                <div class="portfolio-content text-center p-3">
+                                    <h3 class="text-white mb-2">TikTok Video</h3>
+                                    <p class="text-light mb-3">Interface verticale optimisée</p>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="#" class="btn btn-light btn-sm rounded-pill me-2">
+                                            <i class="fas fa-eye me-1"></i> Détails
+                                        </a>
+                                        <a href="http://www.tiktok.com" target="_blank" class="btn btn-primary btn-sm rounded-pill">
+                                            <i class="fas fa-external-link-alt me-1"></i> Visiter
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-tech p-3">
+                            <span class="tech-badge">Flutter</span>
+                            <span class="tech-badge">Dart</span>
+                            <span class="tech-badge">Video Processing</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 8 - Instagram Video -->
+                <div class="col-md-4 col-sm-6 portfolio-item mobile">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-container">
+                            <img src="images/Instagram_video .png.jpeg" class="img-fluid w-100" alt="Instagram Video">
+                            <div class="portfolio-overlay d-flex flex-column justify-content-center">
+                                <div class="portfolio-content text-center p-3">
+                                    <h3 class="text-white mb-2">Instagram Video</h3>
+                                    <p class="text-light mb-3">Stories et Reels</p>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="#" class="btn btn-light btn-sm rounded-pill me-2">
+                                            <i class="fas fa-eye me-1"></i> Détails
+                                        </a>
+                                        <a href="http://www.instagram.com" target="_blank" class="btn btn-primary btn-sm rounded-pill">
+                                            <i class="fas fa-external-link-alt me-1"></i> Visiter
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-tech p-3">
+                            <span class="tech-badge">React Native</span>
+                            <span class="tech-badge">Redux</span>
+                            <span class="tech-badge">Video Editing</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Item 9 - WhatsApp -->
+                <div class="col-md-4 col-sm-6 portfolio-item web">
+                    <div class="portfolio-card">
+                        <div class="portfolio-img-container">
+                            <img src="images/whatsapp_video .png.jpeg" class="img-fluid w-100" alt="WhatsApp">
+                            <div class="portfolio-overlay d-flex flex-column justify-content-center">
+                                <div class="portfolio-content text-center p-3">
+                                    <h3 class="text-white mb-2">WhatsApp Web</h3>
+                                    <p class="text-light mb-3">Interface web responsive</p>
+                                    <div class="d-flex justify-content-center">
+                                        <a href="#" class="btn btn-light btn-sm rounded-pill me-2">
+                                            <i class="fas fa-eye me-1"></i> Détails
+                                        </a>
+                                        <a href="http://web.whatsapp.com" target="_blank" class="btn btn-primary btn-sm rounded-pill">
+                                            <i class="fas fa-external-link-alt me-1"></i> Visiter
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="portfolio-tech p-3">
+                            <span class="tech-badge">Vue.js</span>
+                            <span class="tech-badge">WebSockets</span>
+                            <span class="tech-badge">PWA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    
    <!-- Section Projets Améliorée -->
 <section id="projects" class="py-5 bg-danger text-white position-relative">
     <!-- Éléments de décorations dynamiques -->
@@ -2926,7 +3598,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Effet parallaxe sur les vagues
         window.addEventListener('scroll', function() {
             const scrollY = window.scrollY;
-            const waves = document.Something is wrongSelectorAll('.wave-layer');
+            const waves = document.querySelectorAll('.wave-layer');
             
             waves.forEach((wave, index) => {
                 const speed = 0.2 + (index * 0.1);
@@ -2935,9 +3607,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
         
         // Lien de la flèche
-        document.Something is wrongSelector('.scroll-down-arrow').addEventListener('click', function() {
+        document.querySelector('.scroll-down-arrow').addEventListener('click', function() {
             window.scrollTo({
-                top: document.Something is wrongSelector('.stack-header').offsetTop,
+                top: document.querySelector('.stack-header').offsetTop,
                 behavior: 'smooth'
             });
         });
@@ -3057,14 +3729,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
             </div>
             
-            <!-- Technologie 6 - jSomething is wrong -->
+            <!-- Technologie 6 - jQuery -->
             <div class="col-xl-3 col-lg-4 col-md-6">
                 <div class="tech-card text-center p-4 h-100 bg-dark bg-opacity-10 rounded-4 border border-white border-opacity-10 transition-all position-relative overflow-hidden">
                     <div class="tech-badge">Avancé</div>
                     <div class="tech-icon mb-4">
-                        <img src="images/jSomething is wrong.png.png" alt="jSomething is wrong" class="img-fluid" style="height: 80px;">
+                        <img src="images/jQuery.png.png" alt="jQuery" class="img-fluid" style="height: 80px;">
                     </div>
-                    <h3 class="h4 fw-bold mb-3">jSomething is wrong</h3>
+                    <h3 class="h4 fw-bold mb-3">jQuery</h3>
                     <div class="progress mb-3" style="height: 6px;">
                         <div class="progress-bar bg-white" role="progressbar" style="width: 80%"></div>
                     </div>
@@ -3763,7 +4435,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         
-        // Something is wronguration des particules
+        // Configuration des particules
         const particlesGeometry = new THREE.BufferGeometry();
         const particlesCount = window.innerWidth < 768 ? 200 : 500;
         
@@ -3846,21 +4518,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Effet de hover amélioré
-    document.Something is wrongSelectorAll('.project-card').forEach(card => {
+    document.querySelectorAll('.project-card').forEach(card => {
         card.addEventListener('mouseenter', () => {
-            gsap.to(card.Something is wrongSelector('.project-img'), {
+            gsap.to(card.querySelector('.project-img'), {
                 scale: 1.15,
                 duration: 0.8,
                 ease: "power2.out"
             });
             
-            gsap.to(card.Something is wrongSelector('.project-glare'), {
+            gsap.to(card.querySelector('.project-glare'), {
                 opacity: 0.3,
                 duration: 0.6,
                 ease: "power2.out"
             });
             
-            gsap.to(card.Something is wrongSelector('.project-badge'), {
+            gsap.to(card.querySelector('.project-badge'), {
                 y: -5,
                 duration: 0.4,
                 ease: "back.out(2)"
@@ -3868,19 +4540,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         card.addEventListener('mouseleave', () => {
-            gsap.to(card.Something is wrongSelector('.project-img'), {
+            gsap.to(card.querySelector('.project-img'), {
                 scale: 1,
                 duration: 0.8,
                 ease: "power2.out"
             });
             
-            gsap.to(card.Something is wrongSelector('.project-glare'), {
+            gsap.to(card.querySelector('.project-glare'), {
                 opacity: 0,
                 duration: 0.6,
                 ease: "power2.out"
             });
             
-            gsap.to(card.Something is wrongSelector('.project-badge'), {
+            gsap.to(card.querySelector('.project-badge'), {
                 y: 0,
                 duration: 0.4,
                 ease: "back.out(2)"
@@ -3889,10 +4561,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Animation des modals
-    document.Something is wrongSelectorAll('.modal-trigger').forEach(trigger => {
+    document.querySelectorAll('.modal-trigger').forEach(trigger => {
         trigger.addEventListener('click', function() {
             const modalId = this.getAttribute('data-bs-target');
-            const modal = new bootstrap.Modal(document.Something is wrongSelector(modalId));
+            const modal = new bootstrap.Modal(document.querySelector(modalId));
             
             // Animation d'entrée
             gsap.from(modalId + " .modal-content", {
@@ -3907,7 +4579,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Tooltips Bootstrap
-    const tooltipTriggerList = [].slice.call(document.Something is wrongSelectorAll('[data-tooltip]'));
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-tooltip]'));
     tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl, {
             placement: 'top',
@@ -3917,8 +4589,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 </section>
-
-
 <!-- Section Recommandations avec modèle de footer animé -->
 <section id="recommendations" class="position-relative overflow-hidden py-5 bg-dark text-white">
     <!-- Vagues animées en haut -->
@@ -4139,7 +4809,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (myCarousel) {
             myCarousel.addEventListener('slide.bs.carousel', function (e) {
                 const activeItem = e.relatedTarget;
-                const animatedElement = activeItem.Something is wrongSelector('.animate__animated');
+                const animatedElement = activeItem.querySelector('.animate__animated');
                 
                 // Reset animation
                 animatedElement.classList.remove('animate__fadeIn');
@@ -4149,19 +4819,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Animation des vagues supplémentaires
-        const waves = document.Something is wrongSelectorAll('.wave-animation path');
+        const waves = document.querySelectorAll('.wave-animation path');
         waves.forEach((wave, index) => {
             wave.style.animation = `waveAnimation ${15 + (index * 3)}s linear infinite`;
         });
     });
 </script>
-
-    
     </section>
-
-
 <!-- Section Contact avec fond animé -->
-<section class="contact bg-danger text-white  position-relative py-5 overflow-hidden">
+<section class="contact bg-danger text-white position-relative py-5 overflow-hidden">
     <!-- Vagues animées -->
     <div class="wave-animation position-absolute bottom-0 start-0 w-100">
         <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -4206,13 +4872,14 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <i class="fas fa-envelope fa-2x text-primary"></i>
                                 </div>
                                 <h3 class="h5 mb-3">Email</h3>
-                                <p class="mb-1">Pour toute question ou demande</p>
-                                <a href="abdoulrazakkouame@gmail.com" class="d-block text-primary fw-bold">abdoulrazakkouame@gmail.com</a>
-                               
+                                <p class="mb-3">Pour toute question ou demande</p>
+                                <a href="mailto:abdoulrazakkouame@gmail.com" class="btn btn-primary px-4 py-2 fw-bold">
+                                    <i class="fas fa-paper-plane me-2"></i> Nous écrire
+                                </a>
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Téléphone -->
                     <div class="col-md-4">
                         <div class="contact-card bg-white p-4 h-100 rounded-4 shadow-lg animate__animated" data-animation="fadeInUp" data-delay="0.2s">
@@ -4221,10 +4888,11 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <i class="fas fa-phone-alt fa-2x text-primary"></i>
                                 </div>
                                 <h3 class="h5 mb-3">Téléphone</h3>
-                                <p class="mb-1">Du lundi au vendredi</p>
-                                <p class="mb-1">9h00 - 18h00</p>
-                                <a href="tel:+33123456789" class="d-block text-primary fw-bold">+225 07 48 20 88 65</a>
-                                
+                                <p class="mb-2">Du lundi au vendredi</p>
+                                <p class="mb-3">9h00 - 18h00</p>
+                                <a href="tel:+2250748208865" class="btn btn-outline-primary px-4 py-2 fw-bold">
+                                    <i class="fas fa-phone-alt me-2"></i> +225 07 48 20 88 65
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -4237,10 +4905,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
                                 </div>
                                 <h3 class="h5 mb-3">Localisation</h3>
-                                <p class="mb-1">Rue 170,Cocody Riviera-Bonoumin</p>
-                                <p class="mb-1">Abidjan,côte d'Ivoire</p>
-                                <a href="#" class="btn btn-sm btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#mapModal">
-                                    Voir sur la carte
+                                <p class="mb-2">Rue 170, Cocody Riviera-Bonoumin</p>
+                                <p class="mb-3">Abidjan, Côte d'Ivoire</p>
+                                <a href="#" class="btn btn-primary px-4 py-2 fw-bold" data-bs-toggle="modal" data-bs-target="#mapModal">
+                                    <i class="fas fa-map-marked-alt me-2"></i> Voir la carte
                                 </a>
                             </div>
                         </div>
@@ -4259,22 +4927,394 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="name" placeholder="Votre nom">
+                                        <input type="text" class="form-control" id="name" placeholder="Votre nom" required>
                                         <label for="name">Votre nom</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="email" placeholder="Votre email">
+                                        <input type="email" class="form-control" id="email" placeholder="Votre email" required>
                                         <label for="email">Votre email</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="subject" placeholder="Sujet">
+                                        <input type="text" class="form-control" id="subject" placeholder="Sujet" required>
                                         <label for="subject">Sujet</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Votre message" id="message" style="height: 150px">
+                                        <textarea class="form-control" placeholder="Votre message" id="message" style="height: 150px" required></textarea>
+                                        <label for="message">Votre message</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-primary btn-lg px-4 py-3">
+                                        <i class="fas fa-paper-plane me-2"></i> Envoyer le message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Réseaux sociaux -->
+        <div class="row mt-5 animate__animated" data-animation="fadeIn">
+            <div class="col-12 text-center">
+                <h4 class="mb-4">Suivez-nous sur les réseaux sociaux</h4>
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="#" class="social-icon bg-facebook rounded-circle">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-twitter rounded-circle">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-linkedin rounded-circle">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-instagram rounded-circle">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-youtube rounded-circle">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-whatsapp rounded-circle">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a href="#" class="social-icon bg-tiktok rounded-circle">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 2rem;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .footer {
+            position: relative;
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 4rem 0 1.5rem;
+            overflow: hidden;
+        }
+        
+        .waves-container {
+            position: absolute;
+            top: -100px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            overflow: hidden;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 100px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%232c5364'%3E%3C/path%3E%3C/svg%3E") repeat-x;
+            background-size: 1200px 100px;
+            animation: wave 18s linear infinite;
+            transform: translate3d(0, 0, 0);
+        }
+        
+        .wave:nth-child(2) {
+            animation: wave 16s linear -1s infinite;
+            opacity: 0.7;
+        }
+        
+        .wave:nth-child(3) {
+            animation: wave 20s linear -2s infinite;
+            opacity: 0.5;
+        }
+        
+        @keyframes wave {
+            0% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(-25%);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .social-links a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .social-links a:before {
+            content: '';
+            position: absolute;
+            width: 120%;
+            height: 120%;
+            background: linear-gradient(45deg, #00ccff, #d400d4);
+            transform: translate(-100%, -100%) rotate(45deg);
+            transition: all 0.6s ease;
+            z-index: -1;
+        }
+        
+        .social-links a:hover:before {
+            transform: translate(-10%, -10%) rotate(45deg);
+        }
+        
+        .social-links a:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 20px rgba(0, 0, 0, 0.2);
+            color: #fff;
+        }
+        
+        .social-links a i {
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover i {
+            transform: scale(1.2);
+        }
+        
+        .footer p {
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .footer p:last-of-type {
+            margin-bottom: 0;
+            font-style: italic;
+            opacity: 0.8;
+        }
+        
+        .floating-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 15s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-500px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        .copyright {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .social-links a {
+                width: 50px;
+                height: 50px;
+                margin: 0 10px;
+                font-size: 1.2rem;
+            }
+            
+            .footer {
+                padding: 3rem 0 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .social-links a {
+                width: 45px;
+                height: 45px;
+                margin: 0 8px;
+                font-size: 1.1rem;
+            }
+            
+            .footer p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+       
+    </div>
+    
+    <footer class="footer text-center">
+        <div class="waves-container">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+        
+        <div class="floating-particles" id="particles"></div>
+        
+        <div class="container">
+            <div class="social-links">
+                <a href="#" class="animate__animated animate__fadeIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="#" class="animate__animated animate__fadeIn animate__delay-1s">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" class="animate__animated animate__fadeIn animate__delay-2s">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="animate__animated animate__fadeIn animate__delay-3s">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+            <p>&copy; 2024 Claver Kouakou Kouame. Tous droits réservés.</p>
+            <p>Développeur Web Full Stack Passionné</p>
+            
+            <div class="copyright">
+                Conçu avec <i class="fas fa-heart" style="color: #ff4d4d;"></i> et beaucoup de café <i class="fas fa-coffee"></i>
+            </div>
+        </div>
+    </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Création des particules animées améliorées
+        function createParticles() {
+            const container = document.getElementById('particles-container');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Propriétés aléatoires
+                const size = Math.random() * 8 + 2;
+                const posX = Math.random() * 100;
+                const duration = Math.random() * 15 + 10;
+                const delay = Math.random() * 5;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+                particle.style.opacity = Math.random() * 0.7 + 0.1;
+                
+                // Ajouter un léger flou pour un effet plus doux
+                particle.style.filter = `blur(${Math.random() * 2}px)`;
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        // Animation de la timeline au défilement
+        function animateTimeline() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                            
+                            // Ajouter l'animation directionnelle
+                            if (index % 2 === 0) {
+                                entry.target.classList.add('animate-fade-in-left');
+                            } else {
+                                entry.target.classList.add('animate-fade-in-right');
+                            }
+                        }, index * 200);
+                    }
+                });
+            }, { threshold: 0.3 });
+            
+            timelineItems.forEach(item => {
+                observer.observe(item);
+            });
+        }
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            animateTimeline();
+        });
+    </script>
+</body>
+</html>
