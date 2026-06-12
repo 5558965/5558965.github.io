@@ -1,0 +1,13 @@
+# Temporary files
+-a
+cd
+icacls
+index.cut.html
+index.bad.html
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
