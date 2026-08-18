@@ -778,7 +778,7 @@
                         <p class="mb-0">Developer Fullstack avec 5 ans d'Expérience en conception et développement de site web et application. Spécialisé React.js / TypeScript côté front et Laravel / Node.js côté back.Je conçois et déploie des sites et applications fiables en production : conteneurisation Docker, pipelines CI/CD automatisés (GitLab/GitHub Actions), observabilité 3-piliers (logs, métriques, traces), alerting SRE et tests de charge.</p>
                     </div>
                     <div class="d-flex gap-3 justify-content-center justify-content-lg-start flex-wrap">
-                        <a href="docs/CV-CLAVER.pdf" class="btn btn-primary btn-lg px-4 py-3 animate__animated animate__fadeInUp animate__delay-2s shadow-hover" download>
+                        <a href="docs/CV-CLAVER.pdf" id="btn-download-cv" class="btn btn-primary btn-lg px-4 py-3 animate__animated animate__fadeInUp animate__delay-2s shadow-hover" download>
                             <i class="fas fa-download me-2"></i>Télécharger CV
                         </a>
                         <a href="#contact" class="btn btn-outline-light btn-lg px-4 py-3 animate__animated animate__fadeInUp animate__delay-2s hover-primary shadow-hover">
@@ -5369,6 +5369,18 @@
                 }
             );
         }, 3000);
+
+        // 3) Notification téléchargement CV
+        var cvBtn = document.getElementById('btn-download-cv');
+        if (cvBtn) {
+            cvBtn.addEventListener('click', function () {
+                fetch('/api/track', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ event: 'cv_download', page: page })
+                }).catch(function () {});
+            });
+        }
     })();
     </script>
     <!-- ===== FIN TRACKING ===== -->

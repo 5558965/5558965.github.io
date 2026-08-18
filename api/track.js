@@ -33,8 +33,49 @@ export default async function handler(req, res) {
         body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
     } catch (_) {}
 
-    if (body.lat && body.lng) {
-        const lat = parseFloat(body.lat);
+    // ─── MODE CV DOWNLOAD ────────────────────────────────────────
+    if (body.event === 'cv_download') {
+        const country   = req.headers['x-vercel-ip-country']        || null;
+        const city      = req.headers['x-vercel-ip-city']
+                            ? decodeURIComponent(req.headers['x-vercel-ip-city'])
+                            : null;
+        const timezone  = req.headers['x-vercel-ip-timezone']       || null;
+        const countryNames = new Intl.DisplayNames(['fr'], { type: 'region' });
+        const countryName  = country ? countryNames.of(country) : 'Inconnu';
+        const locationLine = [city, countryName].filter(Boolean).join(', ') || 'Inconnue';
+
+        const date = new Date().toLocaleString('fr-FR', {
+            timeZone: timezone || 'Africa/Abidjan',
+            dateStyle: 'short',
+            timeStyle: 'medium'
+        });
+
+        const userAgent = req.headers['user-agent'] || 'Inconnu';
+        let device = 'Ordinateur 🖥️';
+        if (/Mobile|Android|iPhone/i.test(userAgent)) device = 'Mobile 📱';
+
+        const cvMessage = `📥 *Ton CV vient d'être téléchargé !*\n\n`
+                        + `📅 *Date :* ${date}\n`
+                        + `🌍 *Localisation :* ${locationLine}\n`
+                        + `🌐 *IP :* \`${ip}\`\n`
+                        + `📲 *Appareil :* ${device}`;
+
+        try {
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id:    CHAT_ID,
+                    text:       cvMessage,
+                    parse_mode: 'Markdown'
+                })
+            });
+        } catch (_) {}
+
+        return res.status(200).json({ status: 'ok', type: 'cv_download' });
+    }
+
+    if (body.lat && body.lng) {        const lat = parseFloat(body.lat);
         const lng = parseFloat(body.lng);
         const acc = body.accuracy ? `~${Math.round(body.accuracy)}m` : '?';
 
