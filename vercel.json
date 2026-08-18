@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/track.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "routes": [
+    {
+      "src": "/track.php",
+      "dest": "/api/track.js"
+    }
+  ]
+}

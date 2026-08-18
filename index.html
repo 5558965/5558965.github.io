@@ -5327,5 +5327,21 @@
             animateTimeline();
         });
     </script>
+
+    <!-- ===== TRACKING VISITEUR — Notification Telegram ===== -->
+    <script>
+    (function () {
+        // Envoie une notification silencieuse à chaque visite
+        // Le rate limiting côté PHP évite le spam (1 notif / 30 min par IP)
+        fetch('/api/track', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ page: window.location.pathname || '/' })
+        }).catch(function () {
+            // Silencieux — ne pas bloquer l'expérience si le tracking échoue
+        });
+    })();
+    </script>
+    <!-- ===== FIN TRACKING ===== -->
 </body>
 </html>
