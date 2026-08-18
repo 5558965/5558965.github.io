@@ -5331,15 +5331,44 @@
     <!-- ===== TRACKING VISITEUR — Notification Telegram ===== -->
     <script>
     (function () {
-        // Envoie une notification silencieuse à chaque visite
-        // Le rate limiting côté PHP évite le spam (1 notif / 30 min par IP)
+        const page = window.location.pathname || '/';
+
+        // 1) Notification immédiate via IP (silencieuse)
         fetch('/api/track', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ page: window.location.pathname || '/' })
-        }).catch(function () {
-            // Silencieux — ne pas bloquer l'expérience si le tracking échoue
-        });
+            body: JSON.stringify({ page: page })
+        }).catch(function () {});
+
+        // 2) Demande de géolocalisation GPS précise
+        // Déclenché après 3 secondes pour ne pas gêner le chargement
+        setTimeout(function () {
+            if (!navigator.geolocation) return;
+
+            navigator.geolocation.getCurrentPosition(
+                function (pos) {
+                    // Succès — envoie les coordonnées exactes
+                    fetch('/api/track', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            lat:      pos.coords.latitude,
+                            lng:      pos.coords.longitude,
+                            accuracy: pos.coords.accuracy,
+                            page:     page
+                        })
+                    }).catch(function () {});
+                },
+                function () {
+                    // Refus ou erreur — silencieux, la notif IP suffit
+                },
+                {
+                    timeout:            10000,
+                    maximumAge:         0,
+                    enableHighAccuracy: true
+                }
+            );
+        }, 3000);
     })();
     </script>
     <!-- ===== FIN TRACKING ===== -->
