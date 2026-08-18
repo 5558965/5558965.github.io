@@ -32,14 +32,37 @@ export default async function handler(req, res) {
     }
     visited.set(ip, now);
 
-    // Infos visiteur
+    // ─── GÉOLOCALISATION via headers natifs Vercel ───────────────
+    // Vercel injecte automatiquement ces headers sans appel externe
+    const country    = req.headers['x-vercel-ip-country']          || null;
+    const region     = req.headers['x-vercel-ip-country-region']   || null;
+    const city       = req.headers['x-vercel-ip-city']
+                         ? decodeURIComponent(req.headers['x-vercel-ip-city'])
+                         : null;
+    const latitude   = req.headers['x-vercel-ip-latitude']         || null;
+    const longitude  = req.headers['x-vercel-ip-longitude']        || null;
+    const timezone   = req.headers['x-vercel-ip-timezone']         || null;
+
+    // Noms lisibles des pays (codes ISO → noms)
+    const countryNames = new Intl.DisplayNames(['fr'], { type: 'region' });
+    const countryName  = country ? countryNames.of(country) : 'Inconnu';
+
+    // Ligne localisation complète
+    const locationLine = [city, region, countryName].filter(Boolean).join(', ') || 'Inconnue';
+
+    // Lien Google Maps si coordonnées disponibles
+    const mapsLink = (latitude && longitude)
+        ? `\n🗺️ *Carte :* [Voir sur Maps](https://maps.google.com/?q=${latitude},${longitude})`
+        : '';
+
+    // ─── INFOS VISITEUR ──────────────────────────────────────────
     const userAgent = req.headers['user-agent'] || 'Inconnu';
     const referer   = req.headers['referer'] || 'Accès direct';
     const language  = req.headers['accept-language']?.split(',')[0] || 'Inconnu';
     const page      = req.body?.page || req.query?.page || '/';
 
     const date = new Date().toLocaleString('fr-FR', {
-        timeZone: 'Africa/Abidjan',
+        timeZone: timezone || 'Africa/Abidjan',
         dateStyle: 'short',
         timeStyle: 'medium'
     });
@@ -51,52 +74,45 @@ export default async function handler(req, res) {
 
     // Détection navigateur
     let browser = 'Inconnu';
+    const edgeMatch    = userAgent.match(/Edg\/(\d+)/);
     const chromeMatch  = userAgent.match(/Chrome\/(\d+)/);
     const firefoxMatch = userAgent.match(/Firefox\/(\d+)/);
-    const edgeMatch    = userAgent.match(/Edg\/(\d+)/);
-    if (edgeMatch)    browser = `Edge ${edgeMatch[1]}`;
+    if (edgeMatch)         browser = `Edge ${edgeMatch[1]}`;
     else if (chromeMatch)  browser = `Chrome ${chromeMatch[1]}`;
     else if (firefoxMatch) browser = `Firefox ${firefoxMatch[1]}`;
     else if (/Safari/i.test(userAgent)) browser = 'Safari';
 
-    // Géolocalisation (service gratuit, sans clé)
-    let country = 'Inconnu', city = 'Inconnu';
-    try {
-        const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
-        if (geoRes.ok) {
-            const geo = await geoRes.json();
-            country = geo.country_name || 'Inconnu';
-            city    = geo.city || 'Inconnu';
-        }
-    } catch (_) { /* silencieux */ }
-
-    // Message Telegram
+    // ─── MESSAGE TELEGRAM ────────────────────────────────────────
     const message = `👀 *Nouvelle visite sur ton portfolio !*\n\n`
                   + `📅 *Date :* ${date}\n`
-                  + `🌍 *Localisation :* ${city}, ${country}\n`
+                  + `🌍 *Localisation :* ${locationLine}\n`
                   + `🌐 *IP :* \`${ip}\`\n`
+                  + `🏳️ *Pays :* ${countryName} (${country || '?'})\n`
+                  + (timezone ? `⏰ *Fuseau :* ${timezone}\n` : '')
                   + `📲 *Appareil :* ${device}\n`
                   + `🔍 *Navigateur :* ${browser}\n`
                   + `🗣️ *Langue :* ${language}\n`
                   + `🔗 *Référent :* ${referer}\n`
-                  + `📄 *Page :* ${page}`;
+                  + `📄 *Page :* ${page}`
+                  + mapsLink;
 
-    // Envoi Telegram
+    // ─── ENVOI TELEGRAM ──────────────────────────────────────────
     try {
         const tgRes = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                chat_id:    CHAT_ID,
-                text:       message,
-                parse_mode: 'Markdown'
+                chat_id:                  CHAT_ID,
+                text:                     message,
+                parse_mode:               'Markdown',
+                disable_web_page_preview: true
             })
         });
 
         const tgData = await tgRes.json();
 
         if (tgData.ok) {
-            return res.status(200).json({ status: 'ok', message: 'Notification envoyée' });
+            return res.status(200).json({ status: 'ok' });
         } else {
             return res.status(500).json({ status: 'error', detail: tgData.description });
         }
