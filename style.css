@@ -642,27 +642,29 @@ footer h5
 }
 
 
-/* ===== SUPPRIMER TOUS LES FOCUS-RING BLEUS BOOTSTRAP (global) ===== */
-*:focus,
-*:focus-visible,
-*:focus-within {
+/* ===== FOCUS RING — accessible mais discret ===== */
+/* On supprime uniquement le focus via clic souris, on garde le clavier */
+*:focus:not(:focus-visible) {
     outline: none !important;
     box-shadow: none !important;
 }
-.btn:focus,
-.btn:focus-visible,
-.btn:active:focus {
+/* Focus clavier : visible et personnalisé */
+*:focus-visible {
+    outline: 2px solid #d82c2e !important;
+    outline-offset: 3px !important;
+    box-shadow: none !important;
+}
+.btn:focus:not(:focus-visible),
+.btn:active:focus:not(:focus-visible) {
     outline: none !important;
     box-shadow: none !important;
 }
-.nav-link:focus,
-.nav-link:focus-visible,
-.nav-link.active {
+.nav-link:focus:not(:focus-visible) {
     outline: none !important;
     box-shadow: none !important;
     border: none !important;
 }
-/* Forcer Bootstrap à ne pas afficher le focus-ring */
+/* Forcer Bootstrap à ne pas afficher le focus-ring par défaut */
 :root {
     --bs-focus-ring-width: 0 !important;
     --bs-focus-ring-opacity: 0 !important;

@@ -100,3 +100,17 @@ function initProjectParticles() {
 }
 
 $(document).ready(initProjectParticles);
+
+// ===== LAZY LOADING — toutes les images hors hero =====
+(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        // Ajoute loading="lazy" à toutes les images sauf la photo de profil
+        document.querySelectorAll('img:not([loading])').forEach(function (img) {
+            var src = img.getAttribute('src') || '';
+            // Garder la photo de profil en eager (au-dessus du fold)
+            if (!src.includes('CLAVER.jpg')) {
+                img.setAttribute('loading', 'lazy');
+            }
+        });
+    });
+})();
