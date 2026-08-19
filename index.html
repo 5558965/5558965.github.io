@@ -764,7 +764,7 @@
 </script>
 
     <!-- Section À propos avec animation -->
-<section id="about" class="vh-100 d-flex align-items-center position-relative overflow-hidden">
+<section id="about" class="min-vh-100 d-flex align-items-center position-relative overflow-hidden py-5">
     <!-- Vagues animées en bas -->
     <div class="wave-animation position-absolute bottom-0 start-0 w-100">
         <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -802,15 +802,8 @@
                             <i class="fas fa-paper-plane me-2"></i>Me contacter
                         </a>
                     </div>
-                    <!-- Flèche sous les boutons -->
-                    <div class="mt-4">
-                        <a href="#skills" class="hero-scroll-arrow">
-                            <i class="fas fa-chevron-down"></i>
-                        </a>
-                    </div>
-
                     <!-- Compteur de stats -->
-                    <div class="hero-stats d-flex gap-4 flex-wrap justify-content-center justify-content-lg-start mt-4">
+                    <div class="hero-stats d-flex gap-3 flex-wrap justify-content-center justify-content-lg-start mt-4">
                         <div class="hero-stat-item text-center text-lg-start">
                             <div class="hero-stat-number" data-target="5">0</div>
                             <div class="hero-stat-label">Ans d'expérience</div>
@@ -949,15 +942,17 @@
     /* ===== COMPTEUR DE STATS ===== */
     .hero-stats {
         border-top: 1px solid rgba(255,255,255,0.2);
-        padding-top: 1.2rem;
+        padding-top: 1rem;
+        flex-wrap: nowrap !important;
     }
 
     .hero-stat-item {
-        min-width: 80px;
+        min-width: 70px;
+        flex-shrink: 0;
     }
 
     .hero-stat-number {
-        font-size: 2rem;
+        font-size: 1.6rem;
         font-weight: 800;
         color: #fff;
         line-height: 1;
@@ -966,23 +961,35 @@
 
     .hero-stat-number::after {
         content: '+';
-        font-size: 1.3rem;
+        font-size: 1rem;
         opacity: 0.8;
     }
 
     .hero-stat-label {
-        font-size: 0.78rem;
+        font-size: 0.68rem;
         color: rgba(255,255,255,0.65);
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.8px;
         margin-top: 2px;
+        white-space: nowrap;
     }
 
     .hero-stat-divider {
         width: 1px;
-        height: 40px;
+        height: 35px;
         background: rgba(255,255,255,0.25);
         align-self: center;
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 992px) {
+        .hero-stats {
+            flex-wrap: wrap !important;
+            gap: 1rem !important;
+        }
+        .hero-stat-number {
+            font-size: 1.4rem;
+        }
     }    
     /* Formes décoratives */
     .shape {
@@ -3048,7 +3055,7 @@
         </div>
 
         <!-- Grille certifications - 2 par ligne -->
-        <div class="row g-4" id="projGrid">
+        <div class="row g-4" id="certGrid">
 
             <!-- Projet 1 — Digital Shop -->
             <div class="col-md-6 proj-item web">
