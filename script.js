@@ -149,3 +149,35 @@ $(document).ready(initProjectParticles);
         startCounters();
     }
 })();
+
+// ===== CARTES EXPERIENCE — clic vers le site de l'entreprise =====
+(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.exp-card-link[data-url]').forEach(function (card) {
+            // Curseur pointer pour indiquer que c'est cliquable
+            card.style.cursor = 'pointer';
+
+            // Petit indicateur visuel — icône lien en haut à droite
+            var badge = document.createElement('span');
+            badge.innerHTML = '<i class="fas fa-external-link-alt"></i>';
+            badge.style.cssText = 'position:absolute;top:12px;left:12px;color:rgba(0,0,0,0.25);font-size:0.75rem;transition:color 0.2s;';
+            badge.classList.add('exp-link-badge');
+            card.style.position = 'relative';
+            card.appendChild(badge);
+
+            card.addEventListener('mouseenter', function () {
+                badge.style.color = '#d82c2e';
+            });
+            card.addEventListener('mouseleave', function () {
+                badge.style.color = 'rgba(0,0,0,0.25)';
+            });
+
+            // Clic — ouvre dans un nouvel onglet
+            // On évite de déclencher si l'utilisateur clique sur un lien interne
+            card.addEventListener('click', function (e) {
+                if (e.target.closest('a, button')) return;
+                window.open(card.getAttribute('data-url'), '_blank', 'noopener,noreferrer');
+            });
+        });
+    });
+})();
