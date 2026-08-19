@@ -2963,7 +2963,7 @@
             <div class="row g-4 justify-content-center">
                 <!-- Carte 1 -->
                 <div class="col-md-6">
-                    <div class="edu-card h-100">
+                    <div class="edu-card h-100 edu-card-link" style="cursor:pointer;" onclick="window.open('https://www.ifsm.ci','_blank','noopener,noreferrer')">
                         <div class="edu-icon-wrap">
                             <img src="images/ifsm.png" alt="Institut Sainte Marie" class="edu-logo-img">
                         </div>
@@ -2981,7 +2981,7 @@
 
                 <!-- Carte 2 -->
                 <div class="col-md-6">
-                    <div class="edu-card h-100">
+                    <div class="edu-card h-100 edu-card-link" style="cursor:pointer;" onclick="window.open('https://hca-abidjan.com','_blank','noopener,noreferrer')">
                         <div class="edu-icon-wrap">
                             <img src="images/hca.jpg" alt="Happy Coders Academy" class="edu-logo-img">
                         </div>
@@ -3000,7 +3000,7 @@
 
                 <!-- Carte 3 -->
                 <div class="col-md-6">
-                    <div class="edu-card h-100">
+                    <div class="edu-card h-100 edu-card-link" style="cursor:pointer;" onclick="window.open('https://www.halltech-africa.com','_blank','noopener,noreferrer')">
                         <div class="edu-icon-wrap">
                             <img src="images/halltech.png" alt="Hall Tech Africa" class="edu-logo-img">
                         </div>
@@ -3022,7 +3022,7 @@
 
                 <!-- Carte 4 -->
                 <div class="col-md-6">
-                    <div class="edu-card h-100">
+                    <div class="edu-card h-100 edu-card-link" style="cursor:pointer;" onclick="window.open('mailto:hello@gomycode.com','_blank','noopener,noreferrer')">
                         <div class="edu-icon-wrap">
                             <img src="images/gomycode.png" alt="Gomycode" class="edu-logo-img">
                         </div>
@@ -3132,6 +3132,25 @@
             transform: translateY(-8px);
             background: rgba(255,255,255,0.18);
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+        .edu-card-link:hover {
+            border-color: rgba(78,115,223,0.6);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 0 0 2px rgba(78,115,223,0.3);
+        }
+        .edu-card-link::after {
+            content: '↗';
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.3);
+            transition: color 0.2s;
+        }
+        .edu-card-link {
+            position: relative;
+        }
+        .edu-card-link:hover::after {
+            color: rgba(78,115,223,0.9);
         }
         .edu-icon-wrap {
             width: 70px;
