@@ -4140,7 +4140,10 @@
                         <div class="proj-tags mb-3">
                             <span>Next.Js</span><span>PostgreSQL</span><span>PostgreSQL+ Prisma ORM</span><span>CI/CD via GitHub</span><span>Tailwind CSS + Icônes Lucide</span><span>NextAuth.js (Identifiants + Google + Facebook)</span>
                         </div>
-                        <a href="https://www.cotieremediagroup.com/" class="proj-btn">Voir le projet <i class="fas fa-arrow-right ms-1"></i></a>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a href="https://www.cotieremediagroup.com/" target="_blank" class="proj-btn">Voir le projet <i class="fas fa-arrow-right ms-1"></i></a>
+                            <a href="https://github.com/5558965/cotiere" target="_blank" class="proj-btn proj-btn-gh"><i class="fab fa-github me-1"></i>GitHub</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -4154,11 +4157,14 @@
                     </div>
                     <div class="proj-body">
                         <h5 class="proj-title">CARENTCI</h5>
-                        <p class="proj-desc">Développé CARENTCI,un site de location et vente de véhicules en Côte d'Ivoire.</p>
+                        <p class="proj-desc">Développé CARENTCI, un site de location et vente de véhicules en Côte d'Ivoire.</p>
                         <div class="proj-tags mb-3">
-                            <span>React.js</span><span>API</span><span> Node.js</span><span>Express.js</span><span>MySQL</span><span> Express.js</span><span>Git</span>
+                            <span>React.js</span><span>API</span><span>Node.js</span><span>Express.js</span><span>MySQL</span><span>Git</span>
                         </div>
-                        <a href="https://www.carentci.com/" target="_blank" class="proj-btn">Voir le projet <i class="fas fa-arrow-right ms-1"></i></a>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a href="https://www.carentci.com/" target="_blank" class="proj-btn">Voir le projet <i class="fas fa-arrow-right ms-1"></i></a>
+                            <a href="https://github.com/5558965/carentci" target="_blank" class="proj-btn proj-btn-gh"><i class="fab fa-github me-1"></i>GitHub</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -4331,6 +4337,14 @@
         .proj-btn:hover {
             background: #2e59d9;
             color: #fff;
+            transform: translateX(3px);
+        }
+        /* Bouton GitHub */
+        .proj-btn-gh {
+            background: #24292e;
+        }
+        .proj-btn-gh:hover {
+            background: #000;
             transform: translateX(3px);
         }
     </style>
