@@ -114,3 +114,40 @@ $(document).ready(initProjectParticles);
         });
     });
 })();
+
+// ===== COMPTEUR DE STATS HERO — animation au chargement =====
+(function () {
+    function animateCounter(el) {
+        var target = parseInt(el.getAttribute('data-target'));
+        var duration = 1800;
+        var start = null;
+
+        function step(timestamp) {
+            if (!start) start = timestamp;
+            var progress = Math.min((timestamp - start) / duration, 1);
+            // Easing ease-out
+            var eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * target);
+            if (progress < 1) {
+                requestAnimationFrame(step);
+            } else {
+                el.textContent = target;
+            }
+        }
+        requestAnimationFrame(step);
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+                entry.target.querySelectorAll('.hero-stat-number').forEach(animateCounter);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var statsEl = document.querySelector('.hero-stats');
+        if (statsEl) observer.observe(statsEl);
+    });
+})();
