@@ -613,39 +613,49 @@
 </nav>
 
 <style>
-    /* Language Switcher */
-    .language-switcher {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-    }
+    /* Language Switcher - Fixed Stability */
+.language-switcher {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  position: relative;
+}
 
-    .lang-btn {
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.9rem;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        border: 2px solid transparent;
-    }
+.lang-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid transparent;
+  white-space: nowrap;
+  min-width: 80px;
+  justify-content: center;
+  will-change: background, transform;
+}
 
-    .lang-btn:hover {
-        background: rgba(255, 255, 255, 0.2);
-        transform: translateY(-2px);
-        color: white;
-    }
+.lang-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  color: white;
+  text-decoration: none;
+}
 
-    .lang-btn.active {
-        background: linear-gradient(135deg, #d82c2e 0%, #ff4757 100%);
-        border-color: white;
-        box-shadow: 0 4px 15px rgba(216, 44, 46, 0.4);
-    }
+.lang-btn.active {
+  background: linear-gradient(135deg, #d82c2e 0%, #ff4757 100%) !important;
+  border-color: white !important;
+  box-shadow: 0 4px 20px rgba(216, 44, 46, 0.6) !important;
+  position: relative;
+  z-index: 2;
+  transform: scale(1.05);
+  font-weight: 700 !important;
+}
 
     .lang-btn .flag {
         font-size: 1.2rem;
