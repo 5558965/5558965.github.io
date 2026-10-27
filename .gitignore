@@ -11,3 +11,18 @@ Thumbs.db
 
 # IDE
 .vscode/
+
+# Dependencies
+vendor/
+node_modules/
+
+# Environment
+.env
+
+# Composer
+composer.lock
+composer.phar
+
+# Logs
+*.log
+error_log

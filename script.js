@@ -30,7 +30,7 @@ $(function () {
 
         // Ouvrir le client mail
         var bodyTxt = 'Nom: ' + name + '\nEmail: ' + email + '\n\n' + message;
-        var mailto  = 'mailto:claverkouakou1@gmail.com'
+        var mailto  = 'mailto:claverkouame04@gmail.com'
                     + '?subject=' + encodeURIComponent(subject)
                     + '&body='    + encodeURIComponent(bodyTxt);
 

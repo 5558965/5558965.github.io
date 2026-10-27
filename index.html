@@ -9,6 +9,16 @@
 
     <title>Claver Kouakou — Développeur Full Stack & DevOps</title>
 
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V7CJH9F4X6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-V7CJH9F4X6');
+    </script>
+    <!-- Fin Google Analytics -->
+
     <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="images/CLAVER.jpg">
 
@@ -586,11 +596,72 @@
                     </a>
                 </li>
             </ul>
+
+            <!-- Language Switcher -->
+            <div class="ms-auto">
+                <div class="language-switcher d-flex gap-2">
+                    <a href="index.html" class="lang-btn active" data-lang="fr">
+                        <span class="flag">🇫🇷</span> FR
+                    </a>
+                    <a href="index-en.html" class="lang-btn" data-lang="en">
+                        <span class="flag">🇬🇧</span> EN
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </nav>
 
 <style>
+    /* Language Switcher */
+    .language-switcher {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .lang-btn {
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border: 2px solid transparent;
+    }
+
+    .lang-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        color: white;
+    }
+
+    .lang-btn.active {
+        background: linear-gradient(135deg, #d82c2e 0%, #ff4757 100%);
+        border-color: white;
+        box-shadow: 0 4px 15px rgba(216, 44, 46, 0.4);
+    }
+
+    .lang-btn .flag {
+        font-size: 1.2rem;
+    }
+
+    @media (max-width: 768px) {
+        .lang-btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.85rem;
+        }
+        
+        .language-switcher {
+            margin-top: 1rem;
+        }
+    }
+
     /* Style de la navbar */
     .navbar {
         background: linear-gradient(135deg, #8E0E00 0%, #1F1C18 100%) !important;
@@ -795,7 +866,10 @@
                         <p class="mb-0">Developer Fullstack avec 5 ans d'Expérience en conception et développement de site web et application. Spécialisé React.js / TypeScript côté front et Laravel / Node.js côté back.Je conçois et déploie des sites et applications fiables en production : conteneurisation Docker, pipelines CI/CD automatisés (GitLab/GitHub Actions), observabilité 3-piliers (logs, métriques, traces), alerting SRE et tests de charge.</p>
                     </div>
                     <div class="d-flex gap-3 justify-content-center justify-content-lg-start flex-wrap">
-                        <a href="docs/CV-CLAVER.pdf" id="btn-download-cv" class="btn btn-primary btn-lg px-4 py-3 animate__animated animate__fadeInUp animate__delay-2s shadow-hover" download>
+                        <a href="#contact" class="btn btn-danger btn-lg px-5 py-3 animate__animated animate__fadeInUp animate__delay-2s shadow-hover" style="background: linear-gradient(135deg, #d82c2e 0%, #ff4757 100%); border: none; font-weight: 600;">
+                            <i class="fas fa-handshake me-2"></i>Engagez-moi
+                        </a>
+                        <a href="docs/CV-CLAVER.pdf" id="btn-download-cv" class="btn btn-outline-light btn-lg px-4 py-3 animate__animated animate__fadeInUp animate__delay-2s shadow-hover" download>
                             <i class="fas fa-download me-2"></i>Télécharger CV
                         </a>
                         <a href="#contact" class="btn btn-outline-light btn-lg px-4 py-3 animate__animated animate__fadeInUp animate__delay-2s hover-primary shadow-hover">
@@ -825,6 +899,12 @@
                         </div>
                     </div>
 
+                    <!-- Badge Disponibilité -->
+                    <div class="availability-badge mt-4 animate__animated animate__fadeInUp animate__delay-3s">
+                        <span class="status-dot online"></span>
+                        <span class="status-text">Disponible pour nouvelles missions</span>
+                    </div>
+
                     <!-- Flèche scroll — après les stats, centrée -->
                     <div class="text-center text-lg-start mt-3">
                         <a href="#skills" class="text-white text-decoration-none animate__animated animate__fadeIn animate__delay-4s" style="opacity:0.6;">
@@ -835,8 +915,11 @@
             </div>
             <div class="col-lg-6 order-lg-1 text-center">
                 <div class="profile-picture-container mx-auto">
-                    <img src="images/CLAVER.jpg" alt="Claver Kouakou Kouame" 
-                         class="img-fluid rounded-circle shadow-lg animate__animated animate__zoomIn border border-4 border-white border-opacity-10">
+                    <picture>
+    <source srcset="images/webp/CLAVER.webp" type="image/webp">
+    <img alt="Claver Kouakou Kouame" 
+                         class="img-fluid rounded-circle shadow-lg animate__animated animate__zoomIn border border-4 border-white border-opacity-10"src="images/CLAVER.jpg">
+</picture>
                     <div class="circle-decoration"></div>
                     <!-- Élément décoratif animé -->
                     <div class="tech-badge animate__animated animate__pulse animate__infinite">
@@ -992,7 +1075,49 @@
         .hero-stat-number {
             font-size: 1.4rem;
         }
-    }    
+    }
+
+    /* Badge Disponibilité */
+    .availability-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        padding: 12px 24px;
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .status-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        position: relative;
+    }
+
+    .status-dot.online {
+        background: #28a745;
+        box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+        animation: pulseGreen 2s infinite;
+    }
+
+    @keyframes pulseGreen {
+        0%, 100% {
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+        }
+        50% {
+            box-shadow: 0 0 0 6px rgba(40, 167, 69, 0.1);
+        }
+    }
+
+    .status-text {
+        color: white;
+        font-weight: 600;
+        font-size: 0.95rem;
+    }
+    
     /* Formes décoratives */
     .shape {
         position: absolute;
@@ -1369,7 +1494,10 @@
                             <p class="text-white mt-2 mb-0 small">CI/CD</p>
                         </div>
                         <div class="text-center skill-icon-item">
-                            <div class="skill-circle"><img src="images/odoo.png.png" alt="Odoo" style="width:32px;height:32px;object-fit:contain;"></div>
+                            <div class="skill-circle"><picture>
+    <source srcset="images/webp/odoo.png.webp" type="image/webp">
+    <img alt="Odoo" style="width:32px;height:32px;object-fit:contain;"src="images/odoo.png.png">
+</picture></div>
                             <p class="text-white mt-2 mb-0 small">Odoo</p>
                         </div>
                     </div>
@@ -2086,16 +2214,38 @@
                         <div class="exp-card-inner">
                             <div class="exp-card-top">
                                 <span class="exp-arrow-icon">→</span>
-                                <img src="images/Aelite.jpeg" alt="AELITE CONSTRUCTION" class="exp-logo">
+                                <picture>
+    <source srcset="images/webp/Aelite.webp" type="image/webp">
+    <img alt="AELITE CONSTRUCTION" class="exp-logo"src="images/Aelite.jpeg">
+</picture>
                             </div>
                             <h3 class="exp-job-title">Informaticien</h3>
                             <p class="exp-company">AELITE CONSTRUCTION</p>
                             <div class="exp-tech-stack">
-                                <img src="images/support.png" alt="Support & Assistance" class="exp-tech-icon" title="Support & Assistance">
-                                <img src="images/Sécurité informatique.jpg" alt="Sécurité informatique" class="exp-tech-icon" title="Sécurité informatique">
-                                <img src="images/Gestion des infrastructures.jpeg" alt="Gestion des infrastructures" class="exp-tech-icon" title="Gestion des infrastructures">
-                                <img src="images/Développement & Projets.png" alt="Développement & Projets" class="exp-tech-icon" title="Développement & Projets">
-                                <img src="images/Veille & Amélioration continue.png" alt="Veille & Amélioration continue" class="exp-tech-icon" title="Veille & Amélioration continue">
+                                <picture>
+    <source srcset="images/webp/support.webp" type="image/webp">
+    <img alt="Support & Assistance" class="exp-tech-icon" title="Support & Assistance"src="images/support.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/Sécurité informatique.webp" type="image/webp">
+    <img alt="Sécurité informatique" class="exp-tech-icon" title="Sécurité informatique"src="images/Sécurité informatique.jpg">
+</picture>
+                                <picture>
+    <source srcset="images/webp/Gestion des infrastructures.webp" type="image/webp">
+    <img alt="Gestion des infrastructures" class="exp-tech-icon" title="Gestion des infrastructures"src="images/Gestion des infrastructures.jpeg">
+</picture>
+                                <picture>
+    <source srcset="images/webp/Développement & Projets.webp" type="image/webp">
+    <img alt="Développement & Projets" class="exp-tech-icon" title="Développement & Projets"src="images/Développement & Projets.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/Veille & Amélioration continue.webp" type="image/webp">
+    <img alt="Veille & Amélioration continue" class="exp-tech-icon" title="Veille & Amélioration continue"src="images/Veille & Amélioration continue.png">
+</picture>
+                                 <picture>
+    <source srcset="images/webp/odoo.png.webp" type="image/webp">
+    <img alt="odoo" class="exp-tech-icon" title="odoo"src="images/odoo.png.png">
+</picture>
                             </div>
                             <p class="exp-period">De Juil. 2026 – Aujourd'hui &nbsp;|&nbsp; Côte d'Ivoire, Abidjan</p>
                             <ul class="exp-tasks">
@@ -2105,7 +2255,12 @@
                                 <li>⚙️ <strong>Développement & Projets</strong> — Conception et déploiement d'outils internes pour optimiser les processus métiers.</li>
                                 <li>📡 <strong>Veille & Amélioration continue</strong> — Suivi des évolutions technologiques et proposition de solutions pour moderniser le SI.</li>
                                 <li>📊 <strong>20 utilisateurs</strong> gérés · <strong>50 équipements</strong> dans le parc informatique</li>
-                            </ul>
+                                <li><i class="fas fa-user-shield text-danger me-2"></i>Administrateur Odoo.</li>
+                                <li><i class="fas fa-cogs text-primary me-2"></i>Fonctionnel Odoo.</li>
+                                <li><i class="fas fa-sliders-h text-info me-2"></i>Configuration et analyse des modules.</li>
+                                <li><i class="fas fa-headset text-success me-2"></i>Assistance aux utilisateurs.</li>
+                                <li><i class="fas fa-file-code text-warning me-2"></i>Développé la documentation technique en ligne de l'ensemble des produits de l'entreprise, avec système de commentaires et partage intégré.</li>
+                                
                         </div>
                         <div class="exp-card-number">1/8</div>
                     </div>
@@ -2115,27 +2270,60 @@
                         <div class="exp-card-inner">
                             <div class="exp-card-top">
                                 <span class="exp-arrow-icon">→</span>
-                               <img src="images/Upwork.jpg" alt="Hall Tech Africa" class="exp-logo">
+                               <picture>
+    <source srcset="images/webp/Upwork.webp" type="image/webp">
+    <img alt="Hall Tech Africa" class="exp-logo"src="images/Upwork.jpg">
+</picture>
                             </div>
                             <h3 class="exp-job-title">Développeur Fullstack React.Js / Node.js</h3>
                             <p class="exp-company">ELITE UPWORK</p>
                             <div class="exp-tech-stack">
-                                <img src="images/react.png.png" alt="react" class="exp-tech-icon" title="react">
-                                <img src="images/ts.png" alt="ts" class="exp-tech-icon" title="ts">
-                                <img src="images/laravel.png" alt="laravel" class="exp-tech-icon" title="laravel">
-                                <img src="images/node.js.jpg" alt="nodejs" class="exp-tech-icon" title="nodejs">
-                                 <img src="images/tailwind css.png" alt="tailwind" class="exp-tech-icon" title="tailwind">
-                                  <img src="images/rest.png" alt="rest" class="exp-tech-icon" title="rest">
-                                   <img src="images/postgresql.png" alt="postgresql" class="exp-tech-icon" title="postgresql">
-                                    <img src="images/mysql.png" alt="mysql" class="exp-tech-icon" title="mysql">
-                                     <img src="images/docker.png" alt="docker" class="exp-tech-icon" title="docker">
-                                      <img src="images/git.png" alt="git" class="exp-tech-icon" title="git">
+                                <picture>
+    <source srcset="images/webp/react.png.webp" type="image/webp">
+    <img alt="react" class="exp-tech-icon" title="react"src="images/react.png.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/ts.webp" type="image/webp">
+    <img alt="ts" class="exp-tech-icon" title="ts"src="images/ts.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/laravel.webp" type="image/webp">
+    <img alt="laravel" class="exp-tech-icon" title="laravel"src="images/laravel.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/node.js.webp" type="image/webp">
+    <img alt="nodejs" class="exp-tech-icon" title="nodejs"src="images/node.js.jpg">
+</picture>
+                                 <picture>
+    <source srcset="images/webp/tailwind css.webp" type="image/webp">
+    <img alt="tailwind" class="exp-tech-icon" title="tailwind"src="images/tailwind css.png">
+</picture>
+                                  <picture>
+    <source srcset="images/webp/rest.webp" type="image/webp">
+    <img alt="rest" class="exp-tech-icon" title="rest"src="images/rest.png">
+</picture>
+                                   <picture>
+    <source srcset="images/webp/postgresql.webp" type="image/webp">
+    <img alt="postgresql" class="exp-tech-icon" title="postgresql"src="images/postgresql.png">
+</picture>
+                                    <picture>
+    <source srcset="images/webp/mysql.webp" type="image/webp">
+    <img alt="mysql" class="exp-tech-icon" title="mysql"src="images/mysql.png">
+</picture>
+                                     <picture>
+    <source srcset="images/webp/docker.webp" type="image/webp">
+    <img alt="docker" class="exp-tech-icon" title="docker"src="images/docker.png">
+</picture>
+                                      <picture>
+    <source srcset="images/webp/git.webp" type="image/webp">
+    <img alt="git" class="exp-tech-icon" title="git"src="images/git.png">
+</picture>
                             </div>
                             <p class="exp-period"> De Nov. 2025 – Mai 2026 &nbsp;|&nbsp; Côte d'Ivoire, Abidjan</p>
                             <ul class="exp-tasks">
-                                <li>→ Développé CÔTIÈRE MEDIA GROUP, première plateforme officielle des villes et villages du littoral ivoirien.</li>
-                                <li>→ Développé CARENTCI, un site de location et vente de véhicules en Côte d'Ivoire.</li>
-                                <li>→ Développé FENACI, une Plateforme institutionnelle et événementielle du Festival National de l'Attiéké, transactions (votes, billetterie, stands) gérées via TickoFiesta.</li>
+                                <li><i class="fas fa-globe text-primary me-2"></i>Développé CÔTIÈRE MEDIA GROUP, première plateforme officielle des villes et villages du littoral ivoirien.</li>
+                                <li><i class="fas fa-car text-danger me-2"></i>Développé CARENTCI, un site de location et vente de véhicules en Côte d'Ivoire.</li>
+                                <li><i class="fas fa-ticket-alt text-warning me-2"></i>Développé FENACI, une Plateforme institutionnelle et événementielle du Festival National de l'Attiéké, transactions (votes, billetterie, stands) gérées via TickoFiesta.</li>
                                 <li>📊 <strong>3 projets livrés</strong> en production · <strong>+500 utilisateurs</strong> actifs sur les plateformes</li>
                             </ul>
                         </div>
@@ -2147,28 +2335,58 @@
                         <div class="exp-card-inner">
                             <div class="exp-card-top">
                                 <span class="exp-arrow-icon">→</span>
-                                <img src="images/halltech.png" alt="Hall Tech Africa" class="exp-logo">
+                                <picture>
+    <source srcset="images/webp/halltech.webp" type="image/webp">
+    <img alt="Hall Tech Africa" class="exp-logo"src="images/halltech.png">
+</picture>
                             </div>
                             <h3 class="exp-job-title">Développeur Fullstack Next.js / Laravel</h3>
                             <p class="exp-company">Hall Tech Africa</p>
                             <div class="exp-tech-stack">
-                                <img src="images/odoo.png.png" alt="odoo" class="exp-tech-icon" title="odoo">
-                                <img src="images/python.png.png" alt="python" class="exp-tech-icon" title="python">
-                                <img src="images/js.png.png" alt="js" class="exp-tech-icon" title="js">
-                                 <img src="images/nextjs.jpeg" alt="nextjs" class="exp-tech-icon" title="nextjs">
-                                  <img src="images/laravel.png" alt="laravel" class="exp-tech-icon" title="laravel">
-                                   <img src="images/rest.png" alt="rest" class="exp-tech-icon" title="rest">
-                                    <img src="images/bootstrap.png.png" alt="bootstrap" class="exp-tech-icon" title="bootstrap">
-                                     <img src="images/postgresql.png" alt="postgresql" class="exp-tech-icon" title="postgresql">
-                                      <img src="images/git.png" alt="git" class="exp-tech-icon" title="git">
+                                <picture>
+    <source srcset="images/webp/odoo.png.webp" type="image/webp">
+    <img alt="odoo" class="exp-tech-icon" title="odoo"src="images/odoo.png.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/python.png.webp" type="image/webp">
+    <img alt="python" class="exp-tech-icon" title="python"src="images/python.png.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/js.png.webp" type="image/webp">
+    <img alt="js" class="exp-tech-icon" title="js"src="images/js.png.png">
+</picture>
+                                 <picture>
+    <source srcset="images/webp/nextjs.webp" type="image/webp">
+    <img alt="nextjs" class="exp-tech-icon" title="nextjs"src="images/nextjs.jpeg">
+</picture>
+                                  <picture>
+    <source srcset="images/webp/laravel.webp" type="image/webp">
+    <img alt="laravel" class="exp-tech-icon" title="laravel"src="images/laravel.png">
+</picture>
+                                   <picture>
+    <source srcset="images/webp/rest.webp" type="image/webp">
+    <img alt="rest" class="exp-tech-icon" title="rest"src="images/rest.png">
+</picture>
+                                    <picture>
+    <source srcset="images/webp/bootstrap.png.webp" type="image/webp">
+    <img alt="bootstrap" class="exp-tech-icon" title="bootstrap"src="images/bootstrap.png.png">
+</picture>
+                                     <picture>
+    <source srcset="images/webp/postgresql.webp" type="image/webp">
+    <img alt="postgresql" class="exp-tech-icon" title="postgresql"src="images/postgresql.png">
+</picture>
+                                      <picture>
+    <source srcset="images/webp/git.webp" type="image/webp">
+    <img alt="git" class="exp-tech-icon" title="git"src="images/git.png">
+</picture>
                             </div>
                             <p class="exp-period">De Jan. 2025 – Sept. 2025 &nbsp;|&nbsp; Côte d'Ivoire, Abidjan</p>
                             <ul class="exp-tasks">
-                                <li>→ Administeur Odoo.</li>
-                                <li>→ Fonctionnel Odoo.</li>
-                                <li>→ Configuration et analyse des modules.</li>
-                                <li>→ Assistance des clients.</li>
-                                <li>→ Développé la documentation technique en ligne de l'ensemble des produits de l'entreprise, avec système de commentaires et partage intégré.</li>
+                                <li><i class="fas fa-user-shield text-danger me-2"></i>Administrateur Odoo.</li>
+                                <li><i class="fas fa-cogs text-primary me-2"></i>Fonctionnel Odoo.</li>
+                                <li><i class="fas fa-sliders-h text-info me-2"></i>Configuration et analyse des modules.</li>
+                                <li><i class="fas fa-headset text-success me-2"></i>Assistance des clients.</li>
+                                <li><i class="fas fa-file-code text-warning me-2"></i>Développé la documentation technique en ligne de l'ensemble des produits de l'entreprise, avec système de commentaires et partage intégré.</li>
                                 <li>📊 <strong>20 clients</strong> assistés · <strong>30 modules</strong> Odoo configurés et déployés</li>
                             </ul>
                         </div>
@@ -2180,21 +2398,30 @@
                         <div class="exp-card-inner">
                             <div class="exp-card-top">
                                 <span class="exp-arrow-icon">→</span>
-                                <img src="images/onerasse.jpg" alt="Onerasse" class="exp-logo">
+                                <picture>
+    <source srcset="images/webp/onerasse.webp" type="image/webp">
+    <img alt="Onerasse" class="exp-logo"src="images/onerasse.jpg">
+</picture>
                     
                             </div>
                             <h3 class="exp-job-title">Opérateur de Saisie</h3>
                             <p class="exp-company">Onerasse – Traiteur</p>
                             <div class="exp-tech-stack">
-                                <img src="images/bureautique.png" alt="bureautique" class="exp-logo">
-                                <img src="images/postgresql.png" alt="postgresql" class="exp-logo">
+                                <picture>
+    <source srcset="images/webp/bureautique.webp" type="image/webp">
+    <img alt="bureautique" class="exp-logo"src="images/bureautique.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/postgresql.webp" type="image/webp">
+    <img alt="postgresql" class="exp-logo"src="images/postgresql.png">
+</picture>
                                 
                             </div>
                             <p class="exp-period"> Oct. 2024 – Déc. 2024 &nbsp;|&nbsp; Côte d'Ivoire, Abidjan</p>
                             <ul class="exp-tasks">
-                                <li>→ Réceptionner et vérifier les documents à traiter.</li>
-                                <li>→ Saisie des données et documents administratifs.</li>
-                                <li>→ Mise à jour de la base de données et des documents.</li>
+                                <li><i class="fas fa-inbox text-primary me-2"></i>Réceptionner et vérifier les documents à traiter.</li>
+                                <li><i class="fas fa-keyboard text-info me-2"></i>Saisie des données et documents administratifs.</li>
+                                <li><i class="fas fa-sync-alt text-success me-2"></i>Mise à jour de la base de données et des documents.</li>
                             </ul>
                         </div>
                         <div class="exp-card-number">4/8</div>
@@ -2205,29 +2432,56 @@
                         <div class="exp-card-inner">
                             <div class="exp-card-top">
                                 <span class="exp-arrow-icon">→</span>
-                                 <img src="images/hca.jpg" alt="HCA" class="exp-logo">
+                                 <picture>
+    <source srcset="images/webp/hca.webp" type="image/webp">
+    <img alt="HCA" class="exp-logo"src="images/hca.jpg">
+</picture>
                                 
                             </div>
                             <h3 class="exp-job-title">Formateur Coding & Robotique</h3>
                             <p class="exp-company">Happy Coders Academy</p>
                             <div class="exp-tech-stack">
-                                <img src="images/robotique.jpg" alt="robotique" class="exp-tech-icon" title="robotique">
-                                <img src="images/coding.jpg" alt="coding" class="exp-tech-icon" title="coding">
-                                <img src="images/python.png.png" alt="Python" class="exp-tech-icon" title="Python">
-                                <img src="images/js.png.png" alt="JS" class="exp-tech-icon" title="JavaScript">
-                                <img src="images/css.png.png" alt="css" class="exp-tech-icon" title="css">
-                                <img src="images/html.png.png" alt="html" class="exp-tech-icon" title="html">
-                                <img src="images/tailwind css.png" alt="tailwind" class="exp-tech-icon" title="tailwind">
-                                <img src="images/bootstrap.png.png" alt="bootstrap" class="exp-tech-icon" title="bootstrap">
+                                <picture>
+    <source srcset="images/webp/robotique.webp" type="image/webp">
+    <img alt="robotique" class="exp-tech-icon" title="robotique"src="images/robotique.jpg">
+</picture>
+                                <picture>
+    <source srcset="images/webp/coding.webp" type="image/webp">
+    <img alt="coding" class="exp-tech-icon" title="coding"src="images/coding.jpg">
+</picture>
+                                <picture>
+    <source srcset="images/webp/python.png.webp" type="image/webp">
+    <img alt="Python" class="exp-tech-icon" title="Python"src="images/python.png.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/js.png.webp" type="image/webp">
+    <img alt="JS" class="exp-tech-icon" title="JavaScript"src="images/js.png.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/css.png.webp" type="image/webp">
+    <img alt="css" class="exp-tech-icon" title="css"src="images/css.png.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/html.png.webp" type="image/webp">
+    <img alt="html" class="exp-tech-icon" title="html"src="images/html.png.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/tailwind css.webp" type="image/webp">
+    <img alt="tailwind" class="exp-tech-icon" title="tailwind"src="images/tailwind css.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/bootstrap.png.webp" type="image/webp">
+    <img alt="bootstrap" class="exp-tech-icon" title="bootstrap"src="images/bootstrap.png.png">
+</picture>
                                 
                             </div>
                             <p class="exp-period"> De Mars 2024 – Sept. 2024 &nbsp;|&nbsp; Côte d'Ivoire, Abidjan</p>
                             <ul class="exp-tasks">
-                                <li>→ Animation d'ateliers Coding, Robotique, 3D et Intelligence Artificielle pour les enfants.</li>
-                                <li>→ Développement et maintenance de sites web.</li>
-                                <li>→ Apprentissage des technologies web (Développement frontend en HTML, CSS et JS).</li>
-                                <li>→ Analyse des besoins utilisateurs et création d'un cahier des charges technique.</li>
-                                <li>→ Projets : Lycée Jean-Mermoz, Ecobank, Orange Digital Center, Enko Schools.</li>
+                                <li><i class="fas fa-chalkboard-teacher text-danger me-2"></i>Animation d'ateliers Coding, Robotique, 3D et Intelligence Artificielle pour les enfants.</li>
+                                <li><i class="fas fa-code text-primary me-2"></i>Développement et maintenance de sites web.</li>
+                                <li><i class="fas fa-graduation-cap text-info me-2"></i>Apprentissage des technologies web (Développement frontend en HTML, CSS et JS).</li>
+                                <li><i class="fas fa-clipboard-list text-warning me-2"></i>Analyse des besoins utilisateurs et création d'un cahier des charges technique.</li>
+                                <li><i class="fas fa-project-diagram text-success me-2"></i>Projets : Lycée Jean-Mermoz, Ecobank, Orange Digital Center, Enko Schools.</li>
                                 <li>📊 <strong>+100 élèves</strong> formés · <strong>5 ateliers</strong> animés · <strong>4 écoles</strong> partenaires</li>
                             </ul>
                         </div>
@@ -2239,13 +2493,22 @@
                         <div class="exp-card-inner">
                             <div class="exp-card-top">
                                 <span class="exp-arrow-icon">→</span>
-                                <img src="images/rk.png" alt="HCA" class="exp-logo">
+                                <picture>
+    <source srcset="images/webp/rk.webp" type="image/webp">
+    <img alt="HCA" class="exp-logo"src="images/rk.png">
+</picture>
                             </div>
                             <h3 class="exp-job-title">Assistant de Direction</h3>
                             <p class="exp-company">RK Recrutement</p>
                             <div class="exp-tech-stack">
-                                <img src="images/bureautique.png" alt="bureautique" class="exp-logo">
-                                <img src="images/postgresql.png" alt="postgresql" class="exp-logo">
+                                <picture>
+    <source srcset="images/webp/bureautique.webp" type="image/webp">
+    <img alt="bureautique" class="exp-logo"src="images/bureautique.png">
+</picture>
+                                <picture>
+    <source srcset="images/webp/postgresql.webp" type="image/webp">
+    <img alt="postgresql" class="exp-logo"src="images/postgresql.png">
+</picture>
                                 
                             </div>
                             <p class="exp-period"> De Nov. 2023 – Fév. 2024 &nbsp;|&nbsp; Côte d'Ivoire, Abidjan</p>
@@ -2266,16 +2529,31 @@
                         <div class="exp-card-inner">
                             <div class="exp-card-top">
                                 <span class="exp-arrow-icon">→</span>
-                                <img src="images/wilsem consulting.jpg" alt="HCA" class="exp-logo">
+                                <picture>
+    <source srcset="images/webp/wilsem consulting.webp" type="image/webp">
+    <img alt="HCA" class="exp-logo"src="images/wilsem consulting.jpg">
+</picture>
                                 
                             </div>
                             <h3 class="exp-job-title">Technicien Télécom</h3>
                             <p class="exp-company">Wilsem Consulting</p>
                             <div class="exp-tech-stack">
-                                <img src="images/2G.jpg" alt="2G" class="exp-logo">
-                                <img src="images/3G.jpg" alt="3G" class="exp-logo">
-                                <img src="images/4G.jpg" alt="4G" class="exp-logo">
-                                <img src="images/5G.jpg" alt="5G" class="exp-logo">
+                                <picture>
+    <source srcset="images/webp/2G.webp" type="image/webp">
+    <img alt="2G" class="exp-logo"src="images/2G.jpg">
+</picture>
+                                <picture>
+    <source srcset="images/webp/3G.webp" type="image/webp">
+    <img alt="3G" class="exp-logo"src="images/3G.jpg">
+</picture>
+                                <picture>
+    <source srcset="images/webp/4G.webp" type="image/webp">
+    <img alt="4G" class="exp-logo"src="images/4G.jpg">
+</picture>
+                                <picture>
+    <source srcset="images/webp/5G.webp" type="image/webp">
+    <img alt="5G" class="exp-logo"src="images/5G.jpg">
+</picture>
                                 
                             </div>
                             <p class="exp-period"> De Déc. 2022 – Juin 2023 &nbsp;|&nbsp; Côte d'Ivoire, Abidjan</p>
@@ -2294,14 +2572,23 @@
                         <div class="exp-card-inner">
                             <div class="exp-card-top">
                                 <span class="exp-arrow-icon">→</span>
-                                 <img src="images/SIMEL.jpg" alt="SIMEL" class="exp-logo">
+                                 <picture>
+    <source srcset="images/webp/SIMEL.webp" type="image/webp">
+    <img alt="SIMEL" class="exp-logo"src="images/SIMEL.jpg">
+</picture>
                             
                             </div>
                             <h3 class="exp-job-title">Stagiaire Électronicien</h3>
                             <p class="exp-company">SIMEL</p>
                             <div class="exp-tech-stack">
-                                <img src="images/electronique.jpg" alt="electronique" class="exp-logo">
-                                 <img src="images/maintenance.jpg" alt="maintenance" class="exp-logo">
+                                <picture>
+    <source srcset="images/webp/electronique.webp" type="image/webp">
+    <img alt="electronique" class="exp-logo"src="images/electronique.jpg">
+</picture>
+                                 <picture>
+    <source srcset="images/webp/maintenance.webp" type="image/webp">
+    <img alt="maintenance" class="exp-logo"src="images/maintenance.jpg">
+</picture>
                                 
                             </div>
                             <p class="exp-period"> De Déc. 2021 – Nov. 2022 &nbsp;|&nbsp; Côte d'Ivoire, Abidjan</p>
@@ -2373,26 +2660,72 @@
             width: max-content;
         }
 
-        /* Carte individuelle */
+        /* Carte individuelle - Version blanche améliorée */
         .exp-card {
             position: relative;
-            background: #fff;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e5e5e5;
             width: 420px;
             min-height: 340px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             padding: 28px 28px 20px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        /* Barre supérieure animée */
+        .exp-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #d82c2e 0%, #ff4757 50%, #d82c2e 100%);
+            background-size: 200% 100%;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        /* Effet de brillance au survol */
+        .exp-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(216, 44, 46, 0.03) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
         }
 
         .exp-card:hover {
-            box-shadow: 0 8px 28px rgba(0,0,0,0.12);
-            transform: translateY(-4px);
+            transform: translateY(-10px);
+            border-color: rgba(216, 44, 46, 0.3);
+            box-shadow: 0 15px 40px rgba(216, 44, 46, 0.15);
+            background: #ffffff;
+        }
+
+        .exp-card:hover::before {
+            transform: scaleX(1);
+            animation: shimmer 2s infinite;
+        }
+
+        .exp-card:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         .exp-card-inner {
@@ -2408,58 +2741,132 @@
         }
 
         .exp-arrow-icon {
-            font-size: 1.6rem;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 38px;
+            height: 38px;
+            background: rgba(216, 44, 46, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: #111;
+            color: #d82c2e;
             line-height: 1;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .exp-card:hover .exp-arrow-icon {
+            background: linear-gradient(135deg, #d82c2e 0%, #ff4757 100%);
+            color: white;
+            transform: rotate(-45deg) scale(1.15);
+            box-shadow: 0 4px 15px rgba(216, 44, 46, 0.4);
         }
 
         .exp-logo {
-            width: 52px;
-            height: 52px;
-            object-fit: contain;
-            border-radius: 10px;
+            width: 56px;
+            height: 56px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            background: #ffffff;
+            padding: 2px;
+        }
+
+        .exp-card:hover .exp-logo {
+            transform: scale(1.08) rotate(3deg);
+            border-color: rgba(216, 44, 46, 0.4);
+            box-shadow: 0 6px 20px rgba(216, 44, 46, 0.25);
         }
 
         /* Titre du poste */
         .exp-job-title {
             font-size: 1.35rem;
             font-weight: 700;
-            color: #111;
-            margin-bottom: 4px;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+            margin-top: 12px;
             line-height: 1.3;
+            transition: all 0.3s ease;
+        }
+
+        .exp-card:hover .exp-job-title {
+            color: #000;
         }
 
         /* Société */
         .exp-company {
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 700;
-            color: #333;
-            margin-bottom: 12px;
+            color: #d82c2e;
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            transition: all 0.3s ease;
+        }
+
+        .exp-card:hover .exp-company {
+            color: #ff4757;
+            letter-spacing: 1px;
         }
 
         /* Stack tech */
         .exp-tech-stack {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            min-height: 60px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .exp-card:hover .exp-tech-stack {
+            background: #fff0f0;
+            border-color: rgba(216, 44, 46, 0.2);
         }
 
         .exp-tech-icon {
-            width: 28px;
-            height: 28px;
+            width: 34px;
+            height: 34px;
             object-fit: contain;
-            border-radius: 4px;
-            background: #f5f5f5;
-            padding: 2px;
+            border-radius: 8px;
+            background: #ffffff;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .exp-tech-icon:hover {
+            transform: translateY(-4px) scale(1.15);
+            box-shadow: 0 6px 16px rgba(216, 44, 46, 0.25);
+            background: #fff;
         }
 
         /* Période */
         .exp-period {
             font-size: 0.88rem;
-            color: #555;
-            margin-bottom: 14px;
+            color: #666;
+            margin-bottom: 16px;
+            padding: 10px 14px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: inline-block;
+            border-left: 3px solid #d82c2e;
+            transition: all 0.3s ease;
+        }
+
+        .exp-card:hover .exp-period {
+            background: #fff0f0;
+            border-left-color: #ff4757;
+            color: #333;
         }
 
         /* Tâches */
@@ -2470,29 +2877,80 @@
         }
 
         .exp-tasks li {
-            font-size: 0.9rem;
-            color: #333;
-            margin-bottom: 8px;
-            line-height: 1.5;
-            padding-left: 0;
+            position: relative;
+            font-size: 0.92rem;
+            color: #444;
+            margin-bottom: 10px;
+            line-height: 1.6;
+            padding-left: 18px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            border-left: 2px solid rgba(216, 44, 46, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .exp-tasks li::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 15px;
+            width: 8px;
+            height: 8px;
+            background: #d82c2e;
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px rgba(216, 44, 46, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .exp-tasks li:hover {
+            border-left-color: #ff4757;
+            background: rgba(216, 44, 46, 0.03);
+            padding-left: 24px;
+            color: #222;
+        }
+
+        .exp-tasks li:hover::before {
+            background: #ff4757;
+            box-shadow: 0 0 0 5px rgba(255, 71, 87, 0.2);
+            transform: scale(1.2);
+        }
+
+        .exp-tasks li strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        /* Stats ligne (dernière li avec emoji 📊) */
+        .exp-tasks li:has(strong):last-child {
+            background: #fff0f0;
+            border-radius: 10px;
+            padding: 14px 18px;
+            border-left: 4px solid #d82c2e;
+            margin-top: 16px;
+            font-weight: 500;
         }
 
         /* Numéro de pagination en bas à droite */
         .exp-card-number {
             position: absolute;
-            bottom: 16px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: #1a1a2e;
-            color: #fff;
-            border-radius: 50%;
-            font-size: 0.72rem;
+            bottom: 18px;
+            right: 22px;
+            font-size: 0.75rem;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            letter-spacing: 0.5px;
+            color: #999;
+            background: #f8f9fa;
+            padding: 6px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.8px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .exp-card:hover .exp-card-number {
+            color: #d82c2e;
+            background: #fff0f0;
+            border-color: rgba(216, 44, 46, 0.3);
+            transform: scale(1.05);
         }
 
         /* Responsive : réduire la largeur des cartes sur mobile */
@@ -2965,7 +3423,10 @@
                 <div class="col-md-6">
                     <div class="edu-card h-100 edu-card-link" style="cursor:pointer;" onclick="window.open('https://www.ifsm.ci','_blank','noopener,noreferrer')">
                         <div class="edu-icon-wrap">
-                            <img src="images/ifsm.png" alt="Institut Sainte Marie" class="edu-logo-img">
+                            <picture>
+    <source srcset="images/webp/ifsm.webp" type="image/webp">
+    <img alt="Institut Sainte Marie" class="edu-logo-img"src="images/ifsm.png">
+</picture>
                         </div>
                         <div class="year-badge">2020 – 2021</div>
                         <h3 class="edu-school">Institut Sainte Marie</h3>
@@ -2983,7 +3444,10 @@
                 <div class="col-md-6">
                     <div class="edu-card h-100 edu-card-link" style="cursor:pointer;" onclick="window.open('https://hca-abidjan.com','_blank','noopener,noreferrer')">
                         <div class="edu-icon-wrap">
-                            <img src="images/hca.jpg" alt="Happy Coders Academy" class="edu-logo-img">
+                            <picture>
+    <source srcset="images/webp/hca.webp" type="image/webp">
+    <img alt="Happy Coders Academy" class="edu-logo-img"src="images/hca.jpg">
+</picture>
                         </div>
                         <div class="year-badge">2024</div>
                         <h3 class="edu-school">Happy Coders Academy</h3>
@@ -3002,7 +3466,10 @@
                 <div class="col-md-6">
                     <div class="edu-card h-100 edu-card-link" style="cursor:pointer;" onclick="window.open('https://www.halltech-africa.com','_blank','noopener,noreferrer')">
                         <div class="edu-icon-wrap">
-                            <img src="images/halltech.png" alt="Hall Tech Africa" class="edu-logo-img">
+                            <picture>
+    <source srcset="images/webp/halltech.webp" type="image/webp">
+    <img alt="Hall Tech Africa" class="edu-logo-img"src="images/halltech.png">
+</picture>
                         </div>
                         <div class="year-badge">2025</div>
                         <h3 class="edu-school">Hall Tech Africa</h3>
@@ -3024,7 +3491,10 @@
                 <div class="col-md-6">
                     <div class="edu-card h-100 edu-card-link" style="cursor:pointer;" onclick="window.open('mailto:hello@gomycode.com','_blank','noopener,noreferrer')">
                         <div class="edu-icon-wrap">
-                            <img src="images/gomycode.png" alt="Gomycode" class="edu-logo-img">
+                            <picture>
+    <source srcset="images/webp/gomycode.webp" type="image/webp">
+    <img alt="Gomycode" class="edu-logo-img"src="images/gomycode.png">
+</picture>
                         </div>
                         <div class="year-badge">2026</div>
                         <h3 class="edu-school">Gomycode</h3>
@@ -3063,7 +3533,10 @@
             <div class="col-md-6 proj-item web">
                 <div class="proj-card">
                     <div class="proj-img-wrap">
-                        <img src="images/certificate1.png" alt="CERTIFICATION">
+                        <picture>
+    <source srcset="images/webp/certificate1.webp" type="image/webp">
+    <img alt="CERTIFICATION"src="images/certificate1.png">
+</picture>
                     </div>
                     <div class="proj-body">
                         <h5 class="proj-title">Principes de base de la mise en réseau</h5>
@@ -3076,7 +3549,10 @@
             <div class="col-md-6 proj-item web">
                 <div class="proj-card">
                     <div class="proj-img-wrap">
-                        <img src="images/certificate2.png" alt="Facebook Share">
+                        <picture>
+    <source srcset="images/webp/certificate2.webp" type="image/webp">
+    <img alt="Facebook Share"src="images/certificate2.png">
+</picture>
                     </div>
                     <div class="proj-body">
                         <h5 class="proj-title">Introduction à la cybersécurité</h5>
@@ -3089,7 +3565,10 @@
             <div class="col-md-6 proj-item web">
                 <div class="proj-card">
                     <div class="proj-img-wrap">
-                        <img src="images/certificate3.png" alt="Twitter Retweet">
+                        <picture>
+    <source srcset="images/webp/certificate3.webp" type="image/webp">
+    <img alt="Twitter Retweet"src="images/certificate3.png">
+</picture>
                     </div>
                     <div class="proj-body">
                         <h5 class="proj-title">Sécurité des terminaux</h5>
@@ -3098,15 +3577,35 @@
                 </div>
             </div>
 
-            <!-- Projet 4 — Google Translate -->
+            <!-- Projet 4 — CompTIA Security+ -->
             <div class="col-md-6 proj-item web">
                 <div class="proj-card">
                     <div class="proj-img-wrap">
-                        <img src="images/certificate4.png" alt="Google Translate">
+                        <picture>
+    <source srcset="images/webp/certificate4.webp" type="image/webp">
+    <img alt="CompTIA Security+"src="images/certificate4.png">
+</picture>
                     </div>
                     <div class="proj-body">
-                        <h5 class="proj-title">Formation Intense En Cybersécurité:Certification Comptia Securty+ 701</h5>
+                        <h5 class="proj-title">Formation Intense En Cybersécurité: Certification Comptia Security+ 701</h5>
                         <a href="https://gomycode.com/ic/fr/" target="_blank" class="proj-btn">Voir le projet <i class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projet 5 — Modélisation de données -->
+            <div class="col-md-6 proj-item web">
+                <div class="proj-card">
+                    <div class="proj-img-wrap">
+                        <picture>
+    <source srcset="images/webp/Certificat5.webp" type="image/webp">
+    <img alt="Modélisation de données"src="images/Certificat5.png">
+</picture>
+                    </div>
+                    <div class="proj-body">
+                        <h5 class="proj-title">Modélisation de données</h5>
+                        <p class="proj-desc">Formation de trois mois en modélisation de données par IYF et Mind Bank (Septembre 2026)</p>
+                        <a href="https://iyfcotedivoire.org/" target="_blank" class="proj-btn">Voir le certificat <i class="fas fa-arrow-right ms-1"></i></a>
                     </div>
                 </div>
             </div>
@@ -3957,7 +4456,10 @@
                 <div class="col-md-4 col-sm-6 portfolio-item web">
                     <div class="portfolio-card">
                         <div class="portfolio-img-container">
-                            <img src="images/facebook_share.png.png" class="img-fluid w-100" alt="Facebook Share">
+                            <picture>
+    <source srcset="images/webp/facebook_share.png.webp" type="image/webp">
+    <img class="img-fluid w-100" alt="Facebook Share"src="images/facebook_share.png.png">
+</picture>
                             <div class="portfolio-overlay d-flex flex-column justify-content-center">
                                 <div class="portfolio-content text-center p-3">
                                     <h3 class="text-white mb-2">Facebook Share</h3>
@@ -3984,7 +4486,10 @@
                 <div class="col-md-4 col-sm-6 portfolio-item web">
                     <div class="portfolio-card">
                         <div class="portfolio-img-container">
-                            <img src="images/google_translate.png.png" class="img-fluid w-100" alt="Google Translate">
+                            <picture>
+    <source srcset="images/webp/google_translate.png.webp" type="image/webp">
+    <img class="img-fluid w-100" alt="Google Translate"src="images/google_translate.png.png">
+</picture>
                             <div class="portfolio-overlay d-flex flex-column justify-content-center">
                                 <div class="portfolio-content text-center p-3">
                                     <h3 class="text-white mb-2">Google Translate</h3>
@@ -4011,7 +4516,10 @@
                 <div class="col-md-4 col-sm-6 portfolio-item mobile">
                     <div class="portfolio-card">
                         <div class="portfolio-img-container">
-                            <img src="images/twitter_video.png.png" class="img-fluid w-100" alt="Twitter Video">
+                            <picture>
+    <source srcset="images/webp/twitter_video.png.webp" type="image/webp">
+    <img class="img-fluid w-100" alt="Twitter Video"src="images/twitter_video.png.png">
+</picture>
                             <div class="portfolio-overlay d-flex flex-column justify-content-center">
                                 <div class="portfolio-content text-center p-3">
                                     <h3 class="text-white mb-2">Twitter Video</h3>
@@ -4038,7 +4546,10 @@
                 <div class="col-md-4 col-sm-6 portfolio-item mobile">
                     <div class="portfolio-card">
                         <div class="portfolio-img-container">
-                            <img src="images/youtube.png.png" class="img-fluid w-100" alt="YouTube">
+                            <picture>
+    <source srcset="images/webp/youtube.png.webp" type="image/webp">
+    <img class="img-fluid w-100" alt="YouTube"src="images/youtube.png.png">
+</picture>
                             <div class="portfolio-overlay d-flex flex-column justify-content-center">
                                 <div class="portfolio-content text-center p-3">
                                     <h3 class="text-white mb-2">YouTube</h3>
@@ -4065,7 +4576,10 @@
                 <div class="col-md-4 col-sm-6 portfolio-item web">
                     <div class="portfolio-card">
                         <div class="portfolio-img-container">
-                            <img src="images/twitter_retweet.png.png" class="img-fluid w-100" alt="Twitter Retweet">
+                            <picture>
+    <source srcset="images/webp/twitter_retweet.png.webp" type="image/webp">
+    <img class="img-fluid w-100" alt="Twitter Retweet"src="images/twitter_retweet.png.png">
+</picture>
                             <div class="portfolio-overlay d-flex flex-column justify-content-center">
                                 <div class="portfolio-content text-center p-3">
                                     <h3 class="text-white mb-2">Twitter Retweet</h3>
@@ -4092,7 +4606,10 @@
                 <div class="col-md-4 col-sm-6 portfolio-item design">
                     <div class="portfolio-card">
                         <div class="portfolio-img-container">
-                            <img src="images/facebook_video.png.png" class="img-fluid w-100" alt="Facebook Video">
+                            <picture>
+    <source srcset="images/webp/facebook_video.png.webp" type="image/webp">
+    <img class="img-fluid w-100" alt="Facebook Video"src="images/facebook_video.png.png">
+</picture>
                             <div class="portfolio-overlay d-flex flex-column justify-content-center">
                                 <div class="portfolio-content text-center p-3">
                                     <h3 class="text-white mb-2">Facebook Video</h3>
@@ -4119,7 +4636,10 @@
                 <div class="col-md-4 col-sm-6 portfolio-item mobile">
                     <div class="portfolio-card">
                         <div class="portfolio-img-container">
-                            <img src="images/titok_video .png.jpeg" class="img-fluid w-100" alt="TikTok Video">
+                            <picture>
+    <source srcset="images/webp/titok_video .png.webp" type="image/webp">
+    <img class="img-fluid w-100" alt="TikTok Video"src="images/titok_video .png.jpeg">
+</picture>
                             <div class="portfolio-overlay d-flex flex-column justify-content-center">
                                 <div class="portfolio-content text-center p-3">
                                     <h3 class="text-white mb-2">TikTok Video</h3>
@@ -4146,7 +4666,10 @@
                 <div class="col-md-4 col-sm-6 portfolio-item mobile">
                     <div class="portfolio-card">
                         <div class="portfolio-img-container">
-                            <img src="images/Instagram_video .png.jpeg" class="img-fluid w-100" alt="Instagram Video">
+                            <picture>
+    <source srcset="images/webp/Instagram_video .png.webp" type="image/webp">
+    <img class="img-fluid w-100" alt="Instagram Video"src="images/Instagram_video .png.jpeg">
+</picture>
                             <div class="portfolio-overlay d-flex flex-column justify-content-center">
                                 <div class="portfolio-content text-center p-3">
                                     <h3 class="text-white mb-2">Instagram Video</h3>
@@ -4174,7 +4697,10 @@
                 <div class="col-md-4 col-sm-6 portfolio-item web">
                     <div class="portfolio-card">
                         <div class="portfolio-img-container">
-                            <img src="images/whatsapp_video .png.jpeg" class="img-fluid w-100" alt="WhatsApp">
+                            <picture>
+    <source srcset="images/webp/whatsapp_video .png.webp" type="image/webp">
+    <img class="img-fluid w-100" alt="WhatsApp"src="images/whatsapp_video .png.jpeg">
+</picture>
                             <div class="portfolio-overlay d-flex flex-column justify-content-center">
                                 <div class="portfolio-content text-center p-3">
                                     <h3 class="text-white mb-2">WhatsApp Web</h3>
@@ -4252,7 +4778,10 @@
             <div class="col-md-6 proj-item web">
                 <div class="proj-card">
                     <div class="proj-img-wrap">
-                        <img src="images/cotiere.png" alt="Digital Shop">
+                        <picture>
+    <source srcset="images/webp/cotiere.webp" type="image/webp">
+    <img alt="Digital Shop"src="images/cotiere.png">
+</picture>
                         <span class="proj-badge web">Web</span>
                     </div>
                     <div class="proj-body">
@@ -4273,7 +4802,10 @@
             <div class="col-md-6 proj-item web">
                 <div class="proj-card">
                     <div class="proj-img-wrap">
-                        <img src="images/carentci.png" alt="Facebook Share">
+                        <picture>
+    <source srcset="images/webp/carentci.webp" type="image/webp">
+    <img alt="Facebook Share"src="images/carentci.png">
+</picture>
                         <span class="proj-badge web">Web</span>
                     </div>
                     <div class="proj-body">
@@ -4294,7 +4826,10 @@
             <div class="col-md-6 proj-item web">
                 <div class="proj-card">
                     <div class="proj-img-wrap">
-                        <img src="images/Dashbord.png" alt="Twitter Retweet">
+                        <picture>
+    <source srcset="images/webp/Dashbord.webp" type="image/webp">
+    <img alt="Twitter Retweet"src="images/Dashbord.png">
+</picture>
                         <span class="proj-badge web">Web</span>
                     </div>
                     <div class="proj-body">
@@ -4315,7 +4850,10 @@
             <div class="col-md-6 proj-item web">
                 <div class="proj-card">
                     <div class="proj-img-wrap">
-                        <img src="images/fenaci.png" alt="Google Translate">
+                        <picture>
+    <source srcset="images/webp/fenaci.webp" type="image/webp">
+    <img alt="Google Translate"src="images/fenaci.png">
+</picture>
                         <span class="proj-badge web">Web</span>
                     </div>
                     <div class="proj-body">
@@ -4337,7 +4875,10 @@
             <div class="col-md-6 proj-item devops">
                 <div class="proj-card">
                     <div class="proj-img-wrap">
-                        <img src="images/Cloud.png" alt="">
+                        <picture>
+    <source srcset="images/webp/Cloud.webp" type="image/webp">
+    <img alt=""src="images/Cloud.png">
+</picture>
                         <span class="proj-badge devops">Cloud & DevOps</span>
                     </div>
                     <div class="proj-body">
@@ -4358,7 +4899,10 @@
             <div class="col-md-6 proj-item web">
                 <div class="proj-card">
                     <div class="proj-img-wrap">
-                        <img src="images/Devops.png" alt="Time Tracking">
+                        <picture>
+    <source srcset="images/webp/Devops.webp" type="image/webp">
+    <img alt="Time Tracking"src="images/Devops.png">
+</picture>
                         <span class="proj-badge web">Cloud & DevOps</span>
                     </div>
                     <div class="proj-body">
@@ -4548,7 +5092,10 @@
                 <div class="carousel-item active">
                     <div class="testimonial-item text-center mx-auto animate__animated" data-animation="fadeIn" style="max-width: 800px;">
                         <div class="testimonial-img mb-4">
-                            <img src="images/Larry Page.png.jpeg" class="rounded-circle shadow-lg border border-3 border-primary" width="120" alt="Larry Page">
+                            <picture>
+    <source srcset="images/webp/Larry Page.png.webp" type="image/webp">
+    <img class="rounded-circle shadow-lg border border-3 border-primary" width="120" alt="Larry Page"src="images/Larry Page.png.jpeg">
+</picture>
                         </div>
                         <div class="testimonial-content bg-dark-soft p-4 rounded-4 border border-light border-opacity-10">
                             <div class="quote-icon mb-3">
@@ -4572,7 +5119,10 @@
                 <div class="carousel-item">
                     <div class="testimonial-item text-center mx-auto animate__animated" data-animation="fadeIn" style="max-width: 800px;">
                         <div class="testimonial-img mb-4">
-                            <img src="images/Mark Zuckerberg.png.jpeg" class="rounded-circle shadow-lg border border-3 border-primary" width="120" alt="Mark Zuckerberg">
+                            <picture>
+    <source srcset="images/webp/Mark Zuckerberg.png.webp" type="image/webp">
+    <img class="rounded-circle shadow-lg border border-3 border-primary" width="120" alt="Mark Zuckerberg"src="images/Mark Zuckerberg.png.jpeg">
+</picture>
                         </div>
                         <div class="testimonial-content bg-dark-soft p-4 rounded-4 border border-light border-opacity-10">
                             <div class="quote-icon mb-3">
@@ -4596,7 +5146,10 @@
                 <div class="carousel-item">
                     <div class="testimonial-item text-center mx-auto animate__animated" data-animation="fadeIn" style="max-width: 800px;">
                         <div class="testimonial-img mb-4">
-                            <img src="images/Jack-Dorsey.png.png" class="rounded-circle shadow-lg border border-3 border-primary" width="120" alt="Jack-Dorsey">
+                            <picture>
+    <source srcset="images/webp/Jack-Dorsey.png.webp" type="image/webp">
+    <img class="rounded-circle shadow-lg border border-3 border-primary" width="120" alt="Jack-Dorsey"src="images/Jack-Dorsey.png.png">
+</picture>
                         </div>
                         <div class="testimonial-content bg-dark-soft p-4 rounded-4 border border-light border-opacity-10">
                             <div class="quote-icon mb-3">
@@ -4900,7 +5453,7 @@
                                 </div>
                                 <h3 class="h5 mb-3">Email</h3>
                                 <p class="mb-3">Pour toute question ou demande</p>
-                                <a href="mailto:claverkouakou1@gmail.com" class="btn btn-primary px-4 py-2 fw-bold">
+                                <a href="mailto:claverkouame04@gmail.com" class="btn btn-primary px-4 py-2 fw-bold">
                                     <i class="fas fa-paper-plane me-2"></i> Nous écrire
                                 </a>
                             </div>
@@ -4918,7 +5471,7 @@
                                 <p class="mb-2">Du lundi au vendredi</p>
                                 <p class="mb-3">08h00 - 18h00</p>
                                 <a href="tel:+2250748208865" class="btn btn-outline-primary px-4 py-2 fw-bold">
-                                    <i class="fas fa-phone-alt me-2"></i> +225 07 48 20 88 65
+                                    <i class="fas fa-phone-alt me-2"></i> 07 48 20 88 65
                                 </a>
                             </div>
                         </div>
@@ -5279,18 +5832,21 @@
         <div class="floating-particles" id="particles"></div>
         
         <div class="container">
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/kouame-claver-kouakou-525b721ab" class="animate__animated animate__fadeIn">
+            <div class="social-links mb-4">
+                <a href="https://www.linkedin.com/in/kouame-claver-kouakou-525b721ab" target="_blank" rel="noopener" class="animate__animated animate__fadeIn" title="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a href="https://github.com/5558965" class="animate__animated animate__fadeIn animate__delay-1s">
+                <a href="https://github.com/5558965" target="_blank" rel="noopener" class="animate__animated animate__fadeIn animate__delay-1s" title="GitHub">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="#" class="animate__animated animate__fadeIn animate__delay-2s">
-                    <i class="fab fa-twitter"></i>
+                <a href="mailto:claverkouame04@gmail.com" class="animate__animated animate__fadeIn animate__delay-2s" title="Email">
+                    <i class="fas fa-envelope"></i>
                 </a>
-                <a href="#" class="animate__animated animate__fadeIn animate__delay-3s">
-                    <i class="fab fa-instagram"></i>
+                <a href="tel:+2250748208865" class="animate__animated animate__fadeIn animate__delay-3s" title="Téléphone">
+                    <i class="fas fa-phone"></i>
+                </a>
+                <a href="https://wa.me/2250748208865" target="_blank" rel="noopener" class="animate__animated animate__fadeIn animate__delay-4s" title="WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
                 </a>
             </div>
             <p>&copy; 2024 Claver Kouakou Kouame. Tous droits réservés.</p>
@@ -5301,6 +5857,224 @@
             </div>
         </div>
     </footer>
+
+  <!-- CTA Flottant - Disponibilité -->
+  <!-- Toggle Dark Mode -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Changer le thème">
+      <i class="fas fa-moon"></i>
+  </button>
+
+  <a href="#contact" class="floating-cta" id="floatingCTA">
+      <span class="cta-pulse"></span>
+      <i class="fas fa-briefcase me-2"></i>
+      <span class="cta-text">Disponible pour mission</span>
+  </a>
+
+  <style>
+    /* Toggle Dark Mode */
+    .theme-toggle {
+        position: fixed;
+        bottom: 110px;
+        right: 30px;
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        z-index: 9997;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.6s ease;
+    }
+
+    .theme-toggle:hover {
+        transform: translateY(-3px) scale(1.1);
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+    }
+
+    .theme-toggle i {
+        transition: transform 0.3s ease;
+    }
+
+    .theme-toggle:hover i {
+        transform: rotate(15deg);
+    }
+
+    /* Dark Mode Styles */
+    body.dark-mode {
+        background: #0a0e27;
+        color: #e4e4e7;
+    }
+
+    .dark-mode .navbar {
+        background: rgba(10, 14, 39, 0.95) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-mode .nav-link {
+        color: #e4e4e7 !important;
+    }
+
+    .dark-mode .card {
+        background: #1a1d3a;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-mode .text-muted {
+        color: #a1a1aa !important;
+    }
+
+    .dark-mode .section-header h2,
+    .dark-mode .section-header h3,
+    .dark-mode h1, .dark-mode h2, .dark-mode h3, .dark-mode h4, .dark-mode h5 {
+        color: #f4f4f5;
+    }
+
+    .dark-mode .timeline-item {
+        background: #1a1d3a;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-mode .experience-card {
+        background: #1a1d3a !important;
+    }
+
+    .dark-mode .proj-card {
+        background: #1a1d3a;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-mode .testimonial-item {
+        background: #1a1d3a;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-mode .footer {
+        background: #0a0e27 !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-mode .modal-content {
+        background: #1a1d3a;
+        color: #e4e4e7;
+    }
+
+    .dark-mode .modal-header {
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .dark-mode .form-control,
+    .dark-mode .form-select {
+        background: #0a0e27;
+        border-color: rgba(255, 255, 255, 0.2);
+        color: #e4e4e7;
+    }
+
+    .dark-mode .form-control:focus,
+    .dark-mode .form-select:focus {
+        background: #1a1d3a;
+        border-color: #667eea;
+        color: #e4e4e7;
+    }
+
+    @media (max-width: 768px) {
+        .theme-toggle {
+            bottom: 90px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* CTA Flottant */
+    .floating-cta {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: linear-gradient(135deg, #d82c2e 0%, #ff4757 100%);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 50px;
+        box-shadow: 0 10px 30px rgba(216, 44, 46, 0.4);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        z-index: 9998;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        animation: floatUpDown 3s ease-in-out infinite;
+    }
+
+    .floating-cta:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 15px 40px rgba(216, 44, 46, 0.6);
+        color: white;
+    }
+
+    .floating-cta .cta-pulse {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border-radius: 50px;
+        background: rgba(216, 44, 46, 0.3);
+        animation: pulse 2s infinite;
+        pointer-events: none;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(1.5);
+            opacity: 0;
+        }
+    }
+
+    @keyframes floatUpDown {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-10px);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .floating-cta {
+            bottom: 20px;
+            right: 20px;
+            padding: 12px 20px;
+            font-size: 0.85rem;
+        }
+        .floating-cta .cta-text {
+            display: none;
+        }
+    }
+  </style>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -5488,5 +6262,39 @@
     })();
     </script>
     <!-- ===== FIN TRACKING ===== -->
+
+    <!-- ===== DARK MODE TOGGLE SCRIPT ===== -->
+    <script>
+    (function() {
+        const toggle = document.getElementById('theme-toggle');
+        const icon = toggle.querySelector('i');
+        
+        // Charger la préférence sauvegardée
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            icon.className = 'fas fa-sun';
+        }
+        
+        // Toggle au clic
+        toggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                icon.className = 'fas fa-sun';
+                localStorage.setItem('theme', 'dark');
+                
+                // Animation de transition douce
+                document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+            } else {
+                icon.className = 'fas fa-moon';
+                localStorage.setItem('theme', 'light');
+                
+                document.body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
+            }
+        });
+    })();
+    </script>
+    <!-- ===== FIN DARK MODE ===== -->
 </body>
 </html>
